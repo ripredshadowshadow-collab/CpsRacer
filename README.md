@@ -132,15 +132,15 @@
             </div>
 
             <!-- 2. CPS Tester Page Content (MAJOR UPDATE) -->
-            <div id="cps-tester" class="page bg-white rounded-lg shadow-2xl p-6">
-                <h2 class="text-3xl font-extrabold mb-4 text-gray-800 text-center">
+            <div id="cps-tester" class="page bg-gray-250 rounded-lg shadow-2xl p-6">
+                <h2 class="text-3xl font-extrabold mb-4 text-gray-600 text-center">
                     CPS Tester
                 </h2>
 
                 <!-- Duration Selection Buttons (1s, 5s, 10s) -->
                 <div class="flex justify-center space-x-2 mb-6" id="cps-duration-selector">
-                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">1s</button>
-                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium transition-colors">5s</button>
+                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-red-150 transition-colors">1s</button>
+                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-gray-200 text-white py-2 px-4 rounded-lg font-medium transition-colors">5s</button>
                     <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">10s</button>
                 </div>
                 
@@ -148,7 +148,7 @@
                 <div id="cps-test-area">
                     <div class="flex justify-between items-center mb-4 p-3 bg-gray-50 rounded-lg border-b-4 border-red-500 shadow-inner">
                         <p class="text-lg font-medium text-gray-700">Time: <span id="cps-timer" class="text-xl font-bold text-red-600">5.0</span>s</p>
-                        <p class="text-lg font-medium text-gray-700">Clicks: <span id="cps-click-count" class="text-xl font-bold text-gray-800">0</span></p>
+                        <p class="text-lg font-medium text-gray-700">Clicks: <span id="cps-click-count" class="text-xl font-bold text-red-300">0</span></p>
                     </div>
 
                     <div id="cps-message" class="text-center text-sm mb-4 text-gray-500">
