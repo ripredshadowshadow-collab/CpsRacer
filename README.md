@@ -56,8 +56,8 @@
                 <!-- Practice Option (NEW - Top) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('practice')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 rounded-t-lg hover:bg-indigo-50 transition-colors duration-200">
-                        <!-- Race Flag Icon for Practice -->
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 bg-red-600 rounded-b-lg rounded-t-lg hover:bg-indigo-50 transition-colors duration-200">
+                        <!-- book Icon for Practice -->
                         <svg class="w-5 h-5 mr-3 text-black-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"></path></svg>
                         Practice
                     </a>
@@ -95,7 +95,7 @@
                 <!-- Play Online Option (Last) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('play-online')" 
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-red-600 rounded-b-lg hover:bg-black-500 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 bg-red-600 rounded-b-lg hover:bg-black-500 transition-colors duration-200">
                         <!-- Gamepad Icon -->
                         <svg class="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
                         Play Online
