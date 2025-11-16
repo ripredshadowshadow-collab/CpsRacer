@@ -47,18 +47,18 @@
 
     <div class="w-full max-w-sm mx-auto p-4">
         
-        <!-- Main Menu Title -->
+        <!-- Welcome Race -->
         <h1 id="main-title" class="text-3xl font-bold text-center text-gray-800 mb-6 transition-opacity duration-300">Main Menu</h1>
         
         <!-- Navigation Menu (Always visible for main selection) -->
         <nav id="menu-nav" class="bg-white rounded-lg shadow-xl mb-8 transition-opacity duration-300">
             <ul class="flex flex-col">
-                <!-- Practice Option (NEW - Top) -->
+                <!-- Practice Option (Updated with 🏁 icon) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('practice')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 bg-red-600 rounded-b-lg rounded-t-lg hover:bg-indigo-50 transition-colors duration-200">
-                        <!-- book Icon for Practice -->
-                        <svg class="w-5 h-5 mr-3 text-black-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253"></path></svg>
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-red-500 rounded-t-lg hover:bg-red-bg-red-500 transition-colors duration-200">
+                        <!-- Race Flag Emoji -->
+                        <span class="text-xl mr-3" role="img" aria-label="Race Flag">🏁</span>
                         Practice
                     </a>
                 </li>
@@ -69,7 +69,7 @@
                 <!-- CPS Tester Option -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('cps-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 hover:bg-indigo-50 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-red-500 bg-white hover:bg-indigo-50 transition-colors duration-200">
                         <!-- Mouse Click Icon -->
                         <svg class="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
                         CPS Tester
@@ -82,7 +82,7 @@
                 <!-- Reaction Tester Option -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('reaction-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 bg-red-600 rounded-b-lg hover:bg-black-50 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-500 bg-white hover:bg-indigo-50 transition-colors duration-200">
                         <!-- Lightning Bolt Icon -->
                         <svg class="w-5 h-5 mr-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Reaction Tester
@@ -95,7 +95,7 @@
                 <!-- Play Online Option (Last) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('play-online')" 
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 bg-red-600 rounded-b-lg hover:bg-black-500 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-green-500 bg-red-500 rounded-b-lg hover:bg-indigo-700 transition-colors duration-200">
                         <!-- Gamepad Icon -->
                         <svg class="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
                         Play Online
@@ -107,7 +107,7 @@
         <!-- Dynamic Content Pages -->
         <div id="pages-container" class="mt-8">
 
-            <!-- Practice Page Content (NEW) -->
+            <!-- Practice Page Content -->
             <div id="practice" class="page bg-white rounded-lg shadow-xl p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-700">Practice Zone</h2>
                 <p class="text-gray-600 mb-6">
@@ -131,34 +131,33 @@
                 </button>
             </div>
 
-            <!-- 2. CPS Tester Page Content (MAJOR UPDATE) -->
-            <div id="cps-tester" class="page bg-gray-250 rounded-lg shadow-2xl p-6">
-                <h2 class="text-3xl font-extrabold mb-4 text-gray-600 text-center">
+            <!-- 2. CPS Tester Page Content -->
+            <div id="cps-tester" class="page bg-white rounded-lg shadow-2xl p-6">
+                <h2 class="text-3xl font-extrabold mb-4 text-gray-800 text-center">
                     CPS Tester
                 </h2>
 
                 <!-- Duration Selection Buttons (1s, 5s, 10s) -->
                 <div class="flex justify-center space-x-2 mb-6" id="cps-duration-selector">
-                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-red-150 transition-colors">1s</button>
-                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-gray-200 text-white py-2 px-4 rounded-lg font-medium transition-colors">5s</button>
-                    <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">10s</button>
+                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-500 text-red-500 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">1s</button>
+                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-gray-500 text-red-500 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">5s</button>
+                    <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-500 text-red-500 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">10s</button>
                 </div>
                 
                 <!-- Test Area (Visible when IDLE or PLAYING) -->
                 <div id="cps-test-area">
-                    <div class="flex justify-between items-center mb-4 p-3 bg-gray-50 rounded-lg border-b-4 border-red-500 shadow-inner">
-                        <p class="text-lg font-medium text-gray-700">Time: <span id="cps-timer" class="text-xl font-bold text-red-600">5.0</span>s</p>
-                        <p class="text-lg font-medium text-gray-700">Clicks: <span id="cps-click-count" class="text-xl font-bold text-red-300">0</span></p>
+                    <div class="flex justify-between items-center mb-4 p-3 bg-red-300 rounded-lg border-b-4 border-red-500 shadow-inner">
+                        <p class="text-lg font-medium text-red-500">Time: <span id="cps-timer" class="text-xl font-bold text-red-500">5.0</span>s</p>
+                        <p class="text-lg font-medium text-red-500">Clicks: <span id="cps-click-count" class="text-xl font-bold text-red-500">0</span></p>
                     </div>
 
-                    <div id="cps-message" class="text-center text-sm mb-4 text-gray-500">
+                    <div id="cps-message" class="text-center text-sm mb-4 text-black-500">
                         Click the button below to start the <span id="current-duration-display">5</span>-second test!
                     </div>
 
                     <!-- The main clicking area/button -->
-                    <!-- REMOVED: onclick="handleCPSClick()" to fix TypeError, using JS listeners instead -->
                     <button id="click-area" 
-                            class="w-full h-40 flex items-center justify-center text-3xl font-black text-white bg-green-500 rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 transform hover:scale-[1.01] cursor-pointer">
+                            class="w-full h-40 flex items-center justify-center text-3xl font-black text-black-500 bg-black-500 rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 transform hover:scale-[1.01] cursor-pointer">
                         START
                     </button>
                 </div>
@@ -166,35 +165,55 @@
                 <!-- Results Summary (Hidden initially, shown after END) -->
                 <div id="cps-results-summary" class="hidden text-center">
                     <div class="p-6 bg-red-50 rounded-xl border-2 border-red-200 mb-6 shadow-md">
-                        <p class="text-xl text-gray-700 font-semibold mb-2">Your Score (Average CPS):</p>
-                        <p id="final-cps-score" class="text-6xl font-extrabold text-red-600 mb-4">0.00</p>
-                        <p class="text-base text-gray-500">Total Clicks: <span id="final-total-clicks">0</span></p>
-                        <p class="text-base text-gray-500">Test Duration: <span id="final-test-duration">5</span> seconds</p>
+                        <p class="text-xl text-red-500 font-semibold mb-2">Your Score (Average CPS):</p>
+                        <p id="final-cps-score" class="text-6xl font-extrabold text-red-500 mb-4">0.00</p>
+                        <p class="text-base text-red-500">Total Clicks: <span id="final-total-clicks">0</span></p>
+                        <p class="text-base text-red-500">Test Duration: <span id="final-test-duration">5</span> seconds</p>
                     </div>
                     
-                    <button onclick="resetCPSTester()" class="w-full bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-colors shadow-md mb-3">
+                    <button onclick="resetCPSTester()" class="w-full bg-black-500 text-black-500 font-bold py-3 px-4 rounded-lg hover:bg-black-500 transition-colors shadow-md mb-3">
                         Try Again
                     </button>
                 </div>
                 
                 <!-- Back Button -->
-                <button onclick="showPage('menu')" id="cps-back-button" class="mt-6 w-full bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-600 transition-colors shadow-md">
+                <button onclick="showPage('menu')" id="cps-back-button" class="mt-6 w-full bg-gray-500 text-red-1000 font-bold py-3 px-4 rounded-lg hover:bg-indigo-600 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
             </div>
 
-            <!-- 3. Reaction Tester Page Content (Placeholder) -->
+            <!-- 3. Reaction Tester Page Content (Functional Implementation) -->
             <div id="reaction-tester" class="page bg-white rounded-lg shadow-xl p-6">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-700">Reaction Time Tester</h2>
-                <p class="text-gray-600 mb-6">
-                    This screen is dedicated to measuring the delay between a visual cue and the user's click response.
-                </p>
-                <!-- Placeholder for actual Reaction logic -->
-                <div class="p-8 bg-yellow-100 border-2 border-yellow-500 rounded-lg text-center font-mono text-xl mb-6">
-                    [Reaction Test Interface goes here]
+                <h2 class="text-3xl font-extrabold mb-4 text-red-500 text-center">
+                    Reaction Time Tester
+                </h2>
+
+                <div id="reaction-click-area" 
+                     class="w-full h-80 flex items-center justify-center text-xl font-bold text-black-500 rounded-xl shadow-lg transition-all duration-300 transform cursor-pointer select-none"
+                     style="user-select: none;"
+                >
+                    <div id="reaction-status-text" class="text-center p-4">
+                        <!-- Initial status text, updated by JS -->
+                        <p class="text-2xl font-bold mb-2">Click anywhere to start.</p>
+                        <p class="text-sm opacity-80">Wait for the screen to turn <span class="text-green-300 font-extrabold">GREEN</span>.</p>
+                    </div>
                 </div>
+
+                <!-- Results Summary (Hidden initially) -->
+                <div id="reaction-result-display" class="hidden text-center mt-6">
+                    <div class="p-6 bg-green-50 rounded-xl border-2 border-green-200 mb-6 shadow-md">
+                        <p class="text-xl text-gray-700 font-semibold mb-2">Your Reaction Time:</p>
+                        <p id="reaction-time-score" class="text-6xl font-extrabold text-green-600 mb-4">0 ms</p>
+                        <p id="reaction-average-score" class="text-base text-gray-500">Average of 0 runs: 0 ms</p>
+                    </div>
+                    
+                    <button onclick="startReactionWaiting()" class="w-full bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-colors shadow-md mb-3">
+                        Start New Test
+                    </button>
+                </div>
+                
                 <!-- Back Button -->
-                <button onclick="showPage('menu')" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors">
+                <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-black-500 font-bold py-3 px-4 rounded-lg hover:bg-indigo-600 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
             </div>
@@ -217,6 +236,11 @@
             // 1. Reset CPS game if we are navigating away from it
             if (currentPage === 'cps-tester' && pageId !== 'cps-tester') {
                  resetCPSTester();
+            }
+            
+            // 1.5 Reset Reaction game if we are navigating away from it
+            if (currentPage === 'reaction-tester' && pageId !== 'reaction-tester') {
+                 resetReactionTester();
             }
 
             // Get all page elements
@@ -241,9 +265,11 @@
                 const newPage = document.getElementById(pageId);
                 if (newPage) {
                     newPage.classList.add('page-visible');
-                    // If we are navigating to the CPS tester, ensure it is reset
+                    // If we are navigating to a test, ensure it is reset
                     if (pageId === 'cps-tester') {
                         resetCPSTester();
+                    } else if (pageId === 'reaction-tester') {
+                        resetReactionTester();
                     }
                 }
             }
@@ -413,7 +439,128 @@
             }
         });
 
+        // --- Reaction Tester Logic ---
+        let reactionState = 'IDLE'; // IDLE, WAITING, READY, RESULT
+        let timeoutId = null; // For the random delay
+        let startTime = null; // Time when the screen turns green
+        let reactionTimes = []; // Store results
 
+        // UI Element References
+        const reactionClickArea = document.getElementById('reaction-click-area');
+        const reactionStatusText = document.getElementById('reaction-status-text');
+        const reactionResultDisplay = document.getElementById('reaction-result-display');
+        const reactionTimeScore = document.getElementById('reaction-time-score');
+        const reactionAverageScore = document.getElementById('reaction-average-score');
+        
+        // Initial setup/reset
+        function resetReactionTester() {
+            clearTimeout(timeoutId);
+            reactionState = 'IDLE';
+            startTime = null;
+            
+            reactionClickArea.classList.remove('bg-green-500', 'bg-red-500', 'bg-blue-500', 'hover:bg-green-600');
+            reactionClickArea.classList.add('bg-gray-500');
+            
+            reactionResultDisplay.classList.add('hidden');
+            reactionStatusText.innerHTML = '<p class="text-2xl font-bold mb-2">Click anywhere to start.</p><p class="text-sm opacity-80">Wait for the screen to turn <span class="text-green-300 font-extrabold">GREEN</span>.</p>';
+            
+            // Update average score display
+            updateReactionAverage();
+        }
+
+        function updateReactionAverage() {
+            if (reactionTimes.length > 0) {
+                const total = reactionTimes.reduce((a, b) => a + b, 0);
+                const average = total / reactionTimes.length;
+                reactionAverageScore.textContent = `Average of ${reactionTimes.length} runs: ${Math.round(average)} ms`;
+            } else {
+                reactionAverageScore.textContent = 'Average of 0 runs: 0 ms';
+            }
+        }
+
+        function startReactionWaiting() {
+            reactionState = 'WAITING';
+            reactionResultDisplay.classList.add('hidden');
+            reactionClickArea.classList.remove('bg-gray-500', 'bg-green-500', 'bg-red-500', 'bg-blue-500', 'hover:bg-green-600');
+            reactionClickArea.classList.add('bg-indigo-600');
+            reactionStatusText.innerHTML = '<p class="text-2xl font-bold">...Wait for Green...</p>';
+
+            // Random delay between 2000ms (2s) and 5000ms (5s)
+            const randomDelay = Math.random() * 3000 + 2000;
+            
+            timeoutId = setTimeout(showReactionReady, randomDelay);
+        }
+
+        function showReactionReady() {
+            reactionState = 'READY';
+            startTime = Date.now();
+            
+            reactionClickArea.classList.remove('bg-indigo-600');
+            reactionClickArea.classList.add('bg-green-500', 'hover:bg-green-600');
+            reactionStatusText.innerHTML = '<p class="text-4xl font-extrabold">CLICK NOW!</p>';
+        }
+
+        function handleReactionClick(event) {
+            // Prevent default behavior (like text selection or scrolling on touch)
+            event.preventDefault();
+
+            if (reactionState === 'IDLE') {
+                startReactionWaiting();
+            } else if (reactionState === 'WAITING') {
+                // Clicked too early
+                clearTimeout(timeoutId);
+                reactionState = 'RESULT';
+                
+                reactionClickArea.classList.remove('bg-indigo-600');
+                reactionClickArea.classList.add('bg-red-500');
+                
+                reactionStatusText.innerHTML = '<p class="text-3xl font-bold">TOO SOON!</p><p class="mt-2 text-xl">You clicked before it turned green.</p>';
+                
+                reactionTimeScore.textContent = 'Failed';
+                reactionAverageScore.textContent = 'Click too soon penalty';
+                reactionResultDisplay.classList.remove('hidden');
+
+            } else if (reactionState === 'READY') {
+                // Successful click
+                const endTime = Date.now();
+                const reactionTime = endTime - startTime;
+                
+                reactionState = 'RESULT';
+                reactionTimes.push(reactionTime);
+
+                reactionClickArea.classList.remove('bg-green-500', 'hover:bg-green-600');
+                reactionClickArea.classList.add('bg-blue-500');
+
+                reactionStatusText.innerHTML = '<p class="text-3xl font-bold">Got it!</p><p class="mt-2 text-xl">Your result is below.</p>';
+
+                reactionTimeScore.textContent = `${reactionTime} ms`;
+                reactionResultDisplay.classList.remove('hidden');
+
+                updateReactionAverage();
+                
+            } else if (reactionState === 'RESULT') {
+                // Reset after a result
+                startReactionWaiting();
+            }
+        }
+        
+        // Attach event listener for the reaction test area
+        if (reactionClickArea) {
+            reactionClickArea.addEventListener('mousedown', (e) => {
+                 // Only run the handler if the game is IDLE, WAITING, or READY
+                 if (reactionState !== 'RESULT') {
+                    e.preventDefault(); 
+                    handleReactionClick(e);
+                 }
+            });
+            reactionClickArea.addEventListener('touchstart', (e) => {
+                 if (reactionState !== 'RESULT') {
+                    e.preventDefault(); 
+                    handleReactionClick(e);
+                 }
+            });
+        }
+        
         // Initialize the view to show the menu
         showPage('menu');
     </script>
