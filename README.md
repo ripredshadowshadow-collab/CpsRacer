@@ -77,7 +77,7 @@
                     <a href="javascript:void(0)" onclick="showPage('play-online')" 
                        class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray-700 hover:bg-indigo-1000 transition-colors duration-200">
                         <!-- Gamepad Icon -->
-                        <svg class="w-5 h-5 mr-3" text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
                         Play Online
                     </a>
                 </li>
