@@ -20,7 +20,7 @@
     <style>
         /* Basic body styling */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'sans-serif';
         }
         /* Hide pages by default */
         .page {
@@ -56,7 +56,7 @@
                 <!-- Practice Option (Updated with 🏁 icon) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('practice')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-red-500 rounded-t-lg hover:bg-red-bg-red-500 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-red-600 rounded-t-lg hover:bg-red-700 transition-colors duration-200">
                         <!-- Race Flag Emoji -->
                         <span class="text-xl mr-3" role="img" aria-label="Race Flag">🏁</span>
                         Practice
@@ -69,9 +69,9 @@
                 <!-- CPS Tester Option -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('cps-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-red-500 bg-white hover:bg-indigo-50 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-red-600 hover:bg-red-50 transition-colors duration-200">
                         <!-- Mouse Click Icon -->
-                        <svg class="w-5 h-5 mr-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                        <svg class="w-5 h-5 mr-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
                         CPS Tester
                     </a>
                 </li>
@@ -82,9 +82,9 @@
                 <!-- Reaction Tester Option -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('reaction-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-500 bg-white hover:bg-indigo-50 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-600 hover:bg-yellow-50 transition-colors duration-200">
                         <!-- Lightning Bolt Icon -->
-                        <svg class="w-5 h-5 mr-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <svg class="w-5 h-5 mr-3 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Reaction Tester
                     </a>
                 </li>
@@ -95,9 +95,9 @@
                 <!-- Play Online Option (Last) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('play-online')" 
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-green-500 bg-red-500 rounded-b-lg hover:bg-indigo-700 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-green-600 rounded-b-lg hover:bg-green-700 transition-colors duration-200">
                         <!-- Gamepad Icon -->
-                        <svg class="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
+                        <svg class="w-5 h-5 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
                         Play Online
                     </a>
                 </li>
@@ -139,25 +139,27 @@
 
                 <!-- Duration Selection Buttons (1s, 5s, 10s) -->
                 <div class="flex justify-center space-x-2 mb-6" id="cps-duration-selector">
-                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-500 text-red-500 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">1s</button>
-                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-gray-500 text-red-500 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">5s</button>
-                    <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-500 text-red-500 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">10s</button>
+                    <!-- Adjusted colors for better contrast and function -->
+                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">1s</button>
+                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium ring-2 ring-indigo-400 transition-colors">5s</button>
+                    <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">10s</button>
                 </div>
                 
                 <!-- Test Area (Visible when IDLE or PLAYING) -->
                 <div id="cps-test-area">
-                    <div class="flex justify-between items-center mb-4 p-3 bg-red-300 rounded-lg border-b-4 border-red-500 shadow-inner">
-                        <p class="text-lg font-medium text-red-500">Time: <span id="cps-timer" class="text-xl font-bold text-red-500">5.0</span>s</p>
-                        <p class="text-lg font-medium text-red-500">Clicks: <span id="cps-click-count" class="text-xl font-bold text-red-500">0</span></p>
+                    <div class="flex justify-between items-center mb-4 p-3 bg-red-50 rounded-lg border-b-4 border-red-500 shadow-inner">
+                        <p class="text-lg font-medium text-red-500">Time: <span id="cps-timer" class="text-xl font-bold text-red-600">5.0</span>s</p>
+                        <p class="text-lg font-medium text-red-500">Clicks: <span id="cps-click-count" class="text-xl font-bold text-red-600">0</span></p>
                     </div>
 
-                    <div id="cps-message" class="text-center text-sm mb-4 text-black-500">
+                    <div id="cps-message" class="text-center text-sm mb-4 text-gray-500">
                         Click the button below to start the <span id="current-duration-display">5</span>-second test!
                     </div>
 
                     <!-- The main clicking area/button -->
+                    <!-- Adjusted colors for better visibility -->
                     <button id="click-area" 
-                            class="w-full h-40 flex items-center justify-center text-3xl font-black text-black-500 bg-black-500 rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 transform hover:scale-[1.01] cursor-pointer">
+                            class="w-full h-40 flex items-center justify-center text-3xl font-black text-white bg-gray-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 transform hover:scale-[1.01] cursor-pointer">
                         START
                     </button>
                 </div>
@@ -165,31 +167,39 @@
                 <!-- Results Summary (Hidden initially, shown after END) -->
                 <div id="cps-results-summary" class="hidden text-center">
                     <div class="p-6 bg-red-50 rounded-xl border-2 border-red-200 mb-6 shadow-md">
+                        
                         <p class="text-xl text-red-500 font-semibold mb-2">Your Score (Average CPS):</p>
-                        <p id="final-cps-score" class="text-6xl font-extrabold text-red-500 mb-4">0.00</p>
+                        <p id="final-cps-score" class="text-6xl font-extrabold text-red-600 mb-4">0.00</p>
+                        
+                        <!-- KMPH Score Display -->
+                        <p class="text-xl text-red-500 font-semibold mb-2">Speed (KMPH):</p>
+                        <p id="final-kmph-score" class="text-4xl font-extrabold text-red-600 mb-4">0.00</p>
+                        
                         <p class="text-base text-red-500">Total Clicks: <span id="final-total-clicks">0</span></p>
                         <p class="text-base text-red-500">Test Duration: <span id="final-test-duration">5</span> seconds</p>
                     </div>
                     
-                    <button onclick="resetCPSTester()" class="w-full bg-black-500 text-black-500 font-bold py-3 px-4 rounded-lg hover:bg-black-500 transition-colors shadow-md mb-3">
+                    <!-- Adjusted colors for better visibility -->
+                    <button onclick="resetCPSTester()" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors shadow-md mb-3">
                         Try Again
                     </button>
                 </div>
                 
                 <!-- Back Button -->
-                <button onclick="showPage('menu')" id="cps-back-button" class="mt-6 w-full bg-gray-500 text-red-1000 font-bold py-3 px-4 rounded-lg hover:bg-indigo-600 transition-colors shadow-md">
+                <!-- Adjusted colors for better visibility -->
+                <button onclick="showPage('menu')" id="cps-back-button" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
             </div>
 
             <!-- 3. Reaction Tester Page Content (Functional Implementation) -->
             <div id="reaction-tester" class="page bg-white rounded-lg shadow-xl p-6">
-                <h2 class="text-3xl font-extrabold mb-4 text-red-500 text-center">
+                <h2 class="text-3xl font-extrabold mb-4 text-red-600 text-center">
                     Reaction Time Tester
                 </h2>
 
                 <div id="reaction-click-area" 
-                     class="w-full h-80 flex items-center justify-center text-xl font-bold text-black-500 rounded-xl shadow-lg transition-all duration-300 transform cursor-pointer select-none"
+                     class="w-full h-80 flex items-center justify-center text-xl font-bold text-white rounded-xl shadow-lg transition-all duration-300 transform cursor-pointer select-none"
                      style="user-select: none;"
                 >
                     <div id="reaction-status-text" class="text-center p-4">
@@ -204,6 +214,8 @@
                     <div class="p-6 bg-green-50 rounded-xl border-2 border-green-200 mb-6 shadow-md">
                         <p class="text-xl text-gray-700 font-semibold mb-2">Your Reaction Time:</p>
                         <p id="reaction-time-score" class="text-6xl font-extrabold text-green-600 mb-4">0 ms</p>
+                        <!-- New Rank Display -->
+                        <p id="reaction-rank" class="text-2xl font-bold text-gray-800 mb-4"></p>
                         <p id="reaction-average-score" class="text-base text-gray-500">Average of 0 runs: 0 ms</p>
                     </div>
                     
@@ -213,7 +225,7 @@
                 </div>
                 
                 <!-- Back Button -->
-                <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-black-500 font-bold py-3 px-4 rounded-lg hover:bg-indigo-600 transition-colors shadow-md">
+                <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
             </div>
@@ -292,6 +304,8 @@
         const cpsTestArea = document.getElementById('cps-test-area');
         const cpsResultsSummary = document.getElementById('cps-results-summary');
         const finalCPSScore = document.getElementById('final-cps-score');
+        // New: KMPH score display
+        const finalKMPHScore = document.getElementById('final-kmph-score');
         const finalTotalClicks = document.getElementById('final-total-clicks');
         const finalDurationDisplay = document.getElementById('final-test-duration');
         const durationDisplay = document.getElementById('current-duration-display');
@@ -343,8 +357,9 @@
             // Reset UI state
             if (clickArea) {
                 clickArea.textContent = 'START';
-                clickArea.classList.remove('bg-blue-600', 'cursor-crosshair', 'active:bg-blue-700');
-                clickArea.classList.add('bg-green-500', 'active:bg-green-600');
+                clickArea.classList.remove('bg-blue-600', 'cursor-crosshair', 'active:bg-blue-700', 'bg-green-500', 'active:bg-green-600');
+                // Set default color
+                clickArea.classList.add('bg-gray-700'); 
             }
             
             if (cpsTimerDisplay) cpsTimerDisplay.textContent = timeLeft.toFixed(1);
@@ -367,7 +382,7 @@
             timeLeft = currentDuration;
             
             clickArea.textContent = 'CLICK! CLICK! CLICK!';
-            clickArea.classList.remove('bg-green-500', 'active:bg-green-600');
+            clickArea.classList.remove('bg-gray-700');
             clickArea.classList.add('bg-blue-600', 'cursor-crosshair', 'active:bg-blue-700');
             
             cpsMessage.textContent = 'Test in progress... Click as fast as you can!';
@@ -395,6 +410,8 @@
             // Only show results if the test was completed successfully
             if (completed) {
                 const finalCPS = clicks / currentDuration;
+                // 1 CPS = 2 KMPH
+                const finalKMPH = finalCPS * 2;
                 
                 // Set to IDLE state for restarting
                 cpsGameState = 'IDLE'; 
@@ -405,6 +422,7 @@
 
                 // Update Results Summary UI
                 if (finalCPSScore) finalCPSScore.textContent = finalCPS.toFixed(2);
+                if (finalKMPHScore) finalKMPHScore.textContent = finalKMPH.toFixed(2); // New KMPH score
                 if (finalTotalClicks) finalTotalClicks.textContent = clicks;
                 if (finalDurationDisplay) finalDurationDisplay.textContent = currentDuration;
 
@@ -451,7 +469,28 @@
         const reactionResultDisplay = document.getElementById('reaction-result-display');
         const reactionTimeScore = document.getElementById('reaction-time-score');
         const reactionAverageScore = document.getElementById('reaction-average-score');
+        const reactionRankDisplay = document.getElementById('reaction-rank'); // New UI element for rank
         
+        /**
+         * Determines the rank based on the reaction time in milliseconds.
+         * @param {number} time - Reaction time in milliseconds.
+         * @returns {string} The rank tier.
+         */
+        function getReactionRank(time) {
+            // Tier thresholds based on competitive/real-world human benchmarks
+            if (time < 120) {
+                return '🌌 Ultra Instinct 🚀';
+            } else if (time <= 160) {
+                return '🏎️ F1 Racer 🏆';
+            } else if (time <= 210) {
+                return '🥊 Fighter 💪';
+            } else if (time <= 270) {
+                return '🧍 Average';
+            } else {
+                return '🐌 Very Slow 🐢';
+            }
+        }
+
         // Initial setup/reset
         function resetReactionTester() {
             clearTimeout(timeoutId);
@@ -464,6 +503,7 @@
             reactionResultDisplay.classList.add('hidden');
             reactionStatusText.innerHTML = '<p class="text-2xl font-bold mb-2">Click anywhere to start.</p><p class="text-sm opacity-80">Wait for the screen to turn <span class="text-green-300 font-extrabold">GREEN</span>.</p>';
             
+            reactionRankDisplay.textContent = ''; // Clear rank display on reset
             // Update average score display
             updateReactionAverage();
         }
@@ -483,7 +523,7 @@
             reactionResultDisplay.classList.add('hidden');
             reactionClickArea.classList.remove('bg-gray-500', 'bg-green-500', 'bg-red-500', 'bg-blue-500', 'hover:bg-green-600');
             reactionClickArea.classList.add('bg-indigo-600');
-            reactionStatusText.innerHTML = '<p class="text-2xl font-bold">...Wait for Green...</p>';
+            reactionStatusText.innerHTML = '<p class="text-2xl font-bold text-white">...Wait for Green...</p>';
 
             // Random delay between 2000ms (2s) and 5000ms (5s)
             const randomDelay = Math.random() * 3000 + 2000;
@@ -497,7 +537,7 @@
             
             reactionClickArea.classList.remove('bg-indigo-600');
             reactionClickArea.classList.add('bg-green-500', 'hover:bg-green-600');
-            reactionStatusText.innerHTML = '<p class="text-4xl font-extrabold">CLICK NOW!</p>';
+            reactionStatusText.innerHTML = '<p class="text-4xl font-extrabold text-white">CLICK NOW!</p>';
         }
 
         function handleReactionClick(event) {
@@ -514,9 +554,10 @@
                 reactionClickArea.classList.remove('bg-indigo-600');
                 reactionClickArea.classList.add('bg-red-500');
                 
-                reactionStatusText.innerHTML = '<p class="text-3xl font-bold">TOO SOON!</p><p class="mt-2 text-xl">You clicked before it turned green.</p>';
+                reactionStatusText.innerHTML = '<p class="text-3xl font-bold text-white">TOO SOON!</p><p class="mt-2 text-xl text-white">You clicked before it turned green.</p>';
                 
                 reactionTimeScore.textContent = 'Failed';
+                reactionRankDisplay.textContent = '❌ Failed Test';
                 reactionAverageScore.textContent = 'Click too soon penalty';
                 reactionResultDisplay.classList.remove('hidden');
 
@@ -528,12 +569,15 @@
                 reactionState = 'RESULT';
                 reactionTimes.push(reactionTime);
 
+                const rank = getReactionRank(reactionTime); // Calculate rank
+
                 reactionClickArea.classList.remove('bg-green-500', 'hover:bg-green-600');
                 reactionClickArea.classList.add('bg-blue-500');
 
-                reactionStatusText.innerHTML = '<p class="text-3xl font-bold">Got it!</p><p class="mt-2 text-xl">Your result is below.</p>';
+                reactionStatusText.innerHTML = '<p class="text-3xl font-bold text-white">Got it!</p><p class="mt-2 text-xl text-white">Your result is below.</p>';
 
                 reactionTimeScore.textContent = `${reactionTime} ms`;
+                reactionRankDisplay.textContent = rank; // Display rank
                 reactionResultDisplay.classList.remove('hidden');
 
                 updateReactionAverage();
