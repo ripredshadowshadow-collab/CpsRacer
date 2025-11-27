@@ -70,7 +70,7 @@
     <div class="w-full max-w-sm mx-auto p-4">
         
         <!-- Welcome Race -->
-        <h1 id="main-title" class="text-3xl font-bold text-center text-gray-800 mb-6 transition-opacity duration-300">Main Menu</h1>
+        <h1 id="main-title" class="text-3xl font-techno text-center text-black-800 mb-6 transition-opacity duration-300">Main Menu</h1>
         
         <!-- Navigation Menu (Always visible for main selection) -->
         <nav id="menu-nav" class="bg-white rounded-lg shadow-xl mb-8 transition-opacity duration-300">
@@ -85,19 +85,19 @@
                 </li>
                 
                 <!-- Separator -->
-                <li class="border-t border-gray-200"></li>
+                <li class="border-t border-purple-200"></li>
 
                 <!-- CPS Tester Option -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('cps-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-red-600 hover:bg-red-50 transition-colors duration-200">
-                        <svg class="w-5 h-5 mr-3 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-indigo-600 hover:bg-red-50 transition-colors duration-200">
+                        <svg class="w-5 h-5 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
                         CPS Tester
                     </a>
                 </li>
                 
                 <!-- Separator -->
-                <li class="border-t border-gray-200"></li>
+                <li class="border-t border-purple-200"></li>
 
                 <!-- Reaction Tester Option -->
                 <li>
@@ -109,12 +109,12 @@
                 </li>
                 
                 <!-- Separator -->
-                <li class="border-t border-gray-200"></li>
+                <li class="border-t border-purple-200"></li>
 
                 <!-- Play Online Option (Last) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('play-online')" 
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-green-600 rounded-b-lg hover:bg-green-700 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-gray bg-red-600 rounded-b-lg hover:bg-red-700 transition-colors duration-200">
                         <svg class="w-5 h-5 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
                         Play Online
                     </a>
@@ -137,7 +137,7 @@
                     <div class="relative w-full mb-6">
                         
                         <!-- Left Arrow -->
-                        <button onclick="scrollCarousel(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-2 shadow-md hover:bg-white text-gray-600">
+                        <button onclick="scrollCarousel(-1)" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-indigo/150 rounded-full p-2 shadow-md hover:bg-orange text-blue-500">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         </button>
 
@@ -146,10 +146,10 @@
                             
                             <!-- Car 1: AE86 (Image) -->
                             <div class="snap-center shrink-0 w-full flex flex-col items-center">
-                                <div onclick="selectCar('AE86')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-gray-800 transition-all active:scale-[0.98]">
+                                <div onclick="selectCar('AE86')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-purple-300 transition-all active:scale-[0.98]">
                                     <img src="https://placehold.co/400x200/FACC15/1F2937?text=AE86+Trueno"
                                          alt="Toyota AE86 Trueno" 
-                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-gray-300"
+                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-purple-300"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x200/e2e8f0/1e293b?text=AE86';">
                                     <h3 class="font-bold text-gray-800 text-xl">Toyota AE86</h3>
                                     <p class="text-sm text-gray-500">Drift Legend</p>
@@ -158,10 +158,10 @@
 
                             <!-- Car 2: GTR (Image) -->
                             <div class="snap-center shrink-0 w-full flex flex-col items-center">
-                                <div onclick="selectCar('GTR')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-blue-600 transition-all active:scale-[0.98]">
+                                <div onclick="selectCar('GTR')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-purple-300 transition-all active:scale-[0.98]">
                                     <img src="https://placehold.co/400x200/2563EB/ffffff?text=Skyline+GT-R"
                                          alt="Nissan Skyline GT-R R34" 
-                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-gray-300"
+                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-purple-300"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x200/bfdbfe/1e3a8a?text=Skyline+GTR';">
                                     <h3 class="font-bold text-gray-800 text-xl">Nissan Skyline</h3>
                                     <p class="text-sm text-gray-500">Godzilla</p>
@@ -170,20 +170,20 @@
 
                             <!-- Car 3: BRZ (Image) -->
                             <div class="snap-center shrink-0 w-full flex flex-col items-center">
-                                <div onclick="selectCar('BRZ')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition-all active:scale-[0.98]">
+                                <div onclick="selectCar('BRZ')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-indigo-900 transition-all active:scale-[0.98]">
                                     <img src="https://placehold.co/400x200/6366F1/ffffff?text=Subaru+BRZ"
                                          alt="Subaru BRZ" 
-                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-gray-300"
+                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-purple-300"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x200/e0e7ff/3730a3?text=Subaru+BRZ';">
-                                    <h3 class="font-bold text-gray-800 text-xl">Subaru BRZ</h3>
-                                    <p class="text-sm text-gray-500">Agile Handler</p>
+                                    <h3 class="font-techno text-orange-270 text-xl">Subaru BRZ</h3>
+                                    <p class="text-sm text-orange-300">Agile Handler</p>
                                 </div>
                             </div>
 
                         </div>
 
                         <!-- Right Arrow -->
-                        <button onclick="scrollCarousel(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-2 shadow-md hover:bg-white text-gray-600">
+                        <button onclick="scrollCarousel(1)" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full p-2 shadow-md hover:bg-gray text-red-90">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
                         
@@ -197,7 +197,7 @@
                     </div>
                     
                     <!-- Back Button for main Practice view -->
-                    <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                    <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-60 transition-colors shadow-md">
                         ← Back to Menu
                     </button>
                 </div>
@@ -208,10 +208,10 @@
                     <p id="details-car-subtitle" class="text-md text-red-600 font-semibold text-center mb-6"></p>
 
                     <!-- Car Image (Uses the same URL as the selected card) -->
-                    <img id="details-car-image" src="" alt="Selected Car" class="w-full h-40 object-cover rounded-xl shadow-lg mb-6 border border-gray-200">
+                    <img id="details-car-image" src="" alt="Selected Car" class="w-full h-40 object-cover rounded-xl shadow-lg mb-6 border border-purple-300">
 
-                    <h3 class="text-xl font-bold text-gray-800 mb-3 border-b pb-1">Specifications</h3>
-                    <dl class="space-y-2 text-gray-700">
+                    <h3 class="text-xl font-bold text-yellow-500 mb-3 border-b pb-1">Specifications</h3>
+                    <dl class="space-y-2 text-yellow-500">
                         <div class="flex justify-between">
                             <dt class="font-medium">Engine:</dt>
                             <dd id="details-engine" class="font-semibold"></dd>
@@ -230,15 +230,15 @@
                         </div>
                     </dl>
 
-                    <h3 class="text-xl font-bold text-gray-800 mt-6 mb-3 border-b pb-1">Special Notes</h3>
-                    <p id="details-special" class="text-gray-600 mb-6 italic"></p>
+                    <h3 class="text-xl font-bold text-red-800 mt-6 mb-3 border-b pb-1">Special Notes</h3>
+                    <p id="details-special" class="text-green-600 mb-6 italic"></p>
 
                     <!-- Action Buttons -->
                     <div class="space-y-3">
                         <button class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors shadow-md">
                             Start Race Practice
                         </button>
-                        <button onclick="showCarSelectView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        <button onclick="showCarSelectView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-100 transition-colors shadow-md">
                             ← Select a Different Car
                         </button>
                     </div>
@@ -249,32 +249,32 @@
             <!-- 1. Play Online Page Content -->
             <div id="play-online" class="page bg-white rounded-lg shadow-xl p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-gray-700">Play Online Mode</h2>
-                <p class="text-gray-600 mb-6">
+                <p class="text-orange-400 mb-6">
                     This screen would handle multi-player aspects, leaderboards, and connecting users for online races or challenges.
                 </p>
                 <!-- Back Button -->
-                <button onclick="showPage('menu')" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors">
+                <button onclick="showPage('menu')" class="w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-300 transition-colors">
                     ← Back to Menu
                 </button>
             </div>
 
             <!-- 2. CPS Tester Page Content -->
-            <div id="cps-tester" class="page bg-white rounded-lg shadow-2xl p-6">
+            <div id="cps-tester" class="page bg-purple rounded-lg shadow-2xl p-6">
                 <h2 class="text-3xl font-extrabold mb-4 text-gray-800 text-center">CPS Tester</h2>
                 <!-- ... CPS Tester content here ... -->
                 <div class="flex justify-center space-x-2 mb-6" id="cps-duration-selector">
-                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">1s</button>
-                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium ring-2 ring-indigo-400 transition-colors">5s</button>
-                    <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">10s</button>
+                    <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-orange-200 text-green-400 py-2 px-4 rounded-lg font-medium hover:bg-green-90 transition-colors">1s</button>
+                    <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-indigo-700 text-white py-2 px-4 rounded-lg font-medium ring-2 ring-indigo-150 transition-colors">5s</button>
+                    <button onclick="setCPSTime(10)" id="duration-10" class="duration-btn bg-gray-200 text-orange-700 py-2 px-4 rounded-lg font-medium hover:bg-red-300 transition-colors">10s</button>
                 </div>
                 
                 <div id="cps-test-area">
-                    <div class="flex justify-between items-center mb-4 p-3 bg-red-50 rounded-lg border-b-4 border-red-500 shadow-inner">
+                    <div class="flex justify-between items-center mb-4 p-3 bg-red-50 rounded-lg border-b-4 border-purple-300 shadow-inner">
                         <p class="text-lg font-medium text-red-500">Time: <span id="cps-timer" class="text-xl font-bold text-red-600">5.0</span>s</p>
                         <p class="text-lg font-medium text-red-500">Clicks: <span id="cps-click-count" class="text-xl font-bold text-red-600">0</span></p>
                     </div>
 
-                    <div id="cps-message" class="text-center text-sm mb-4 text-gray-500">
+                    <div id="cps-message" class="text-center text-sm mb-4 text-orange-500">
                         Click the button below to start the <span id="current-duration-display">5</span>-second test!
                     </div>
 
@@ -285,24 +285,24 @@
                 </div>
 
                 <div id="cps-results-summary" class="hidden text-center">
-                    <div class="p-6 bg-red-50 rounded-xl border-2 border-red-200 mb-6 shadow-md">
+                    <div class="p-6 bg-green-50 rounded-xl border-2 border-purple-200 mb-6 shadow-md">
                         
-                        <p class="text-xl text-red-500 font-semibold mb-2">Your Score (Average CPS):</p>
-                        <p id="final-cps-score" class="text-6xl font-extrabold text-red-600 mb-4">0.00</p>
+                        <p class="text-xl text-orange-300 font-bold mb-2">Your Score (Average CPS):</p>
+                        <p id="final-cps-score" class="text-6xl font-extrabold text-orange-300 mb-4">0.00</p>
                         
-                        <p class="text-xl text-red-500 font-semibold mb-2">Speed (KMPH):</p>
-                        <p id="final-kmph-score" class="text-4xl font-extrabold text-red-600 mb-4">0.00</p>
+                        <p class="text-xl text-red-300 font-bold mb-2">Speed (KMPH):</p>
+                        <p id="final-kmph-score" class="text-4xl font-extrabold text-orange-53400 mb-4">0.00</p>
                         
                         <p class="text-base text-red-500">Total Clicks: <span id="final-total-clicks">0</span></p>
                         <p class="text-base text-red-500">Test Duration: <span id="final-test-duration">5</span> seconds</p>
                     </div>
                     
-                    <button onclick="resetCPSTester()" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors shadow-md mb-3">
+                    <button onclick="resetCPSTester()" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-300 transition-colors shadow-md mb-3">
                         Try Again
                     </button>
                 </div>
                 
-                <button onclick="showPage('menu')" id="cps-back-button" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                <button onclick="showPage('menu')" id="cps-back-button" class="mt-6 w-full bg-black-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-300 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
             </div>
@@ -312,29 +312,29 @@
                 <h2 class="text-3xl font-extrabold mb-4 text-red-600 text-center">Reaction Time Tester</h2>
 
                 <div id="reaction-click-area" 
-                     class="w-full h-80 flex items-center justify-center text-xl font-bold text-white rounded-xl shadow-lg transition-all duration-300 transform cursor-pointer select-none"
+                     class="w-full h-80 flex items-center justify-center text-xl font-techno text-white rounded-xl shadow-lg transition-all duration-300 transform cursor-pointer select-none"
                      style="user-select: none;"
                 >
                     <div id="reaction-status-text" class="text-center p-4">
                         <p class="text-2xl font-bold mb-2">Click anywhere to start.</p>
-                        <p class="text-sm opacity-80">Wait for the screen to turn <span class="text-green-300 font-extrabold">GREEN</span>.</p>
+                        <p class="text-sm opacity-300">Wait for the screen to turn <span class="text-green-300 font-extrabold">RED</span>.</p>
                     </div>
                 </div>
 
                 <div id="reaction-result-display" class="hidden text-center mt-6">
                     <div class="p-6 bg-green-50 rounded-xl border-2 border-green-200 mb-6 shadow-md">
-                        <p class="text-xl text-gray-700 font-semibold mb-2">Your Reaction Time:</p>
-                        <p id="reaction-time-score" class="text-6xl font-extrabold text-green-600 mb-4">0 ms</p>
-                        <p id="reaction-rank" class="text-2xl font-bold text-gray-800 mb-4"></p>
-                        <p id="reaction-average-score" class="text-base text-gray-500">Average of 0 runs: 0 ms</p>
+                        <p class="text-xl text-white-400 font-semibold mb-2">Your Reaction Time:</p>
+                        <p id="reaction-time-score" class="text-6xl font-extrabold text-red-400 mb-4">0 ms</p>
+                        <p id="reaction-rank" class="text-2xl font-bold text-gray-600 mb-4"></p>
+                        <p id="reaction-average-score" class="text-base text-gray-400">Average of 0 runs: 0 ms</p>
                     </div>
                     
-                    <button onclick="startReactionWaiting()" class="w-full bg-green-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-600 transition-colors shadow-md mb-3">
+                    <button onclick="startReactionWaiting()" class="w-full bg-red-300 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-300 transition-colors shadow-md mb-3">
                         Start New Test
                     </button>
                 </div>
                 
-                <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-300 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
             </div>
@@ -489,11 +489,11 @@
             const indicators = document.querySelectorAll('.indicator');
             indicators.forEach((ind, i) => {
                 if (i === activeIndex) {
-                    ind.classList.remove('bg-gray-300');
+                    ind.classList.remove('bg-red-300');
                     ind.classList.add('bg-gray-800');
                 } else {
                     ind.classList.remove('bg-gray-800');
-                    ind.classList.add('bg-gray-300');
+                    ind.classList.add('bg-red-300');
                 }
             });
         }
@@ -526,11 +526,11 @@
             buttons.forEach(btn => {
                 const duration = parseInt(btn.textContent.replace('s', ''));
                 if (duration === currentDuration) {
-                    btn.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                    btn.classList.remove('bg-red-300', 'text-black-700', 'hover:bg-red-300');
                     btn.classList.add('bg-indigo-600', 'text-white', 'ring-2', 'ring-indigo-400');
                 } else {
                     btn.classList.remove('bg-indigo-600', 'text-white', 'ring-2', 'ring-indigo-400');
-                    btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+                    btn.classList.add('bg-green-200', 'text-black-700', 'hover:bg-red-300');
                 }
             });
         }
@@ -563,7 +563,7 @@
 
             if (clickArea) {
                 clickArea.textContent = 'START';
-                clickArea.classList.remove('bg-blue-600', 'cursor-crosshair', 'active:bg-blue-700', 'bg-green-500', 'active:bg-green-600');
+                clickArea.classList.remove('bg-blue-300', 'cursor-crosshair', 'active:bg-blue-300', 'bg-green-500', 'active:bg-green-600');
                 clickArea.classList.add('bg-gray-700'); 
             }
             
@@ -584,7 +584,7 @@
             timeLeft = currentDuration;
             
             clickArea.textContent = 'CLICK! CLICK! CLICK!';
-            clickArea.classList.remove('bg-gray-700');
+            clickArea.classList.remove('bg-red-300');
             clickArea.classList.add('bg-blue-600', 'cursor-crosshair', 'active:bg-blue-700');
             
             cpsMessage.textContent = 'Test in progress... Click as fast as you can!';
