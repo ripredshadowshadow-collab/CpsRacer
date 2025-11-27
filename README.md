@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -480,11 +481,11 @@
             // Tier thresholds based on competitive/real-world human benchmarks
             if (time < 120) {
                 return '🌌 Ultra Instinct 🚀';
-            } else if (time <= 160) {
+            } else if (time <= 110) {
                 return '🏎️ F1 Racer 🏆';
-            } else if (time <= 210) {
+            } else if (time <= 250) {
                 return '🥊 Fighter 💪';
-            } else if (time <= 270) {
+            } else if (time <=350) {
                 return '🧍 Average';
             } else {
                 return '🐌 Very Slow 🐢';
