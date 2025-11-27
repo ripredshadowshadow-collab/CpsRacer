@@ -21,10 +21,51 @@
         }
     </script>
     <style>
+        /* CRITICAL: Ensure HTML and Body fill the viewport */
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        
         /* Basic body styling */
         body {
             font-family: 'Inter', 'sans-serif';
+            /* Ensure the body doesn't scroll when using fixed video */
+            overflow: hidden;
+            /* Remove default gray background */
+            background-color: transparent; 
+            /* Flex layout to center the content */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            min-height: 100vh;
         }
+        
+        /* 1. Full-screen Video Background Implementation */
+        #background-video {
+            position: fixed; /* Anchors it to the viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures video covers the whole screen */
+            z-index: 0; /* Ensures it is the lowest layer (background) */
+            background-color: #333; /* Dark fallback in case video fails */
+            /* Add a slight dark filter for better readability of the foreground content */
+            filter: brightness(0.6) grayscale(0.1); 
+        }
+
+        /* 2. Main Content Container Styling for Readability */
+        .main-menu-container {
+            z-index: 10; /* Puts content clearly above the video */
+            position: relative;
+            /* Made slightly transparent (0.7 opacity) to show the video behind it */
+            background-color: rgba(255, 255, 255, 0.7); 
+            backdrop-filter: blur(5px); /* Optional: adds a subtle blur effect for polish */
+        }
+
         /* Hide pages by default */
         .page {
             display: none;
@@ -57,6 +98,7 @@
         /* Styling for the car card selection to make it look professional */
         .car-card {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            background-color: #f7f7f7; /* Keep cards slightly off-white */
         }
         .car-card:hover {
             transform: scale(1.02);
@@ -64,9 +106,17 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center py-12">
+<body class="min-h-screen flex items-center justify-center py-12">
 
-    <div class="w-full max-w-sm mx-auto p-4">
+    <!-- Video Background Element (Autoplay, Loop, and Muted) -->
+    <video autoplay muted loop id="background-video">
+        <source src="VID-20251127-WA0002.mp4" type="video/mp4">
+        <!-- Fallback message -->
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Main Menu Content Container -->
+    <div class="w-full max-w-sm mx-auto p-4 main-menu-container rounded-xl shadow-2xl">
         
         <!-- Welcome Race -->
         <h1 id="main-title" class="text-3xl font-bold text-center text-gray-800 mb-6 transition-opacity duration-300">Main Menu</h1>
@@ -98,24 +148,12 @@
                 <!-- Separator -->
                 <li class="border-t border-gray-200"></li>
 
-                <!-- Reaction Tester Option -->
+                <!-- Reaction Tester Option (Now the last item, so rounded-b-lg added) -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('reaction-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-600 hover:bg-yellow-50 transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-600 hover:bg-yellow-50 rounded-b-lg transition-colors duration-200">
                         <svg class="w-5 h-5 mr-3 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Reaction Tester
-                    </a>
-                </li>
-                
-                <!-- Separator -->
-                <li class="border-t border-gray-200"></li>
-
-                <!-- Play Online Option (Last) -->
-                <li>
-                    <a href="javascript:void(0)" onclick="showPage('play-online')" 
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-green-600 rounded-b-lg hover:bg-green-700 transition-colors duration-200">
-                        <svg class="w-5 h-5 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 20l-1-7-5.5 2.5v1.5L11 20zM13 20l1-7 5.5 2.5v1.5L13 20zM2 10l5.5-2.5L11 10h2l3.5-1.5L22 10V6a2 2 0 00-2-2H4a2 2 0 00-2 2v4z"></path></svg>
-                        Play Online
                     </a>
                 </li>
             </ul>
@@ -148,7 +186,7 @@
                                 <div onclick="selectCar('AE86')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-gray-800 transition-all active:scale-[0.98]">
                                     <img src="https://placehold.co/400x200/FACC15/1F2937?text=AE86+Trueno"
                                          alt="Toyota AE86 Trueno" 
-                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-gray-300"
+                                         class="w-full h-32 mb-4 object-contain rounded-lg shadow-md border border-gray-300"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x200/e2e8f0/1e293b?text=AE86';">
                                     <h3 class="font-bold text-gray-800 text-xl">Toyota AE86</h3>
                                     <p class="text-sm text-gray-500">Drift Legend</p>
@@ -160,20 +198,20 @@
                                 <div onclick="selectCar('GTR')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-blue-600 transition-all active:scale-[0.98]">
                                     <img src="https://placehold.co/400x200/2563EB/ffffff?text=Skyline+GT-R"
                                          alt="Nissan Skyline GT-R R34" 
-                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-gray-300"
+                                         class="w-full h-32 mb-4 object-contain rounded-lg shadow-md border border-gray-300"
                                          onerror="this.onerror=null; this.src='https://placehold.co/400x200/bfdbfe/1e3a8a?text=Skyline+GTR';">
                                     <h3 class="font-bold text-gray-800 text-xl">Nissan Skyline</h3>
                                     <p class="text-sm text-gray-500">Godzilla</p>
                                 </div>
                             </div>
 
-                            <!-- Car 3: BRZ (Image) -->
+                            <!-- Car 3: BRZ (Image) - Reverted to placeholder after background change -->
                             <div class="snap-center shrink-0 w-full flex flex-col items-center">
                                 <div onclick="selectCar('BRZ')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition-all active:scale-[0.98]">
-                                    <img src="https://placehold.co/400x200/6366F1/ffffff?text=Subaru+BRZ"
-                                         alt="Subaru BRZ" 
-                                         class="w-full h-32 mb-4 object-cover rounded-lg shadow-md border border-gray-300"
-                                         onerror="this.onerror=null; this.src='https://placehold.co/400x200/e0e7ff/3730a3?text=Subaru+BRZ';">
+                                    <img src="https://placehold.co/400x200/4F46E5/ffffff?text=Subaru+BRZ"
+                                         alt="Subaru BRZ Placeholder" 
+                                         class="w-full h-32 mb-4 object-contain rounded-lg shadow-md border border-gray-300"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/400x200/bfdbfe/1e3a8a?text=BRZ';">
                                     <h3 class="font-bold text-gray-800 text-xl">Subaru BRZ</h3>
                                     <p class="text-sm text-gray-500">Agile Handler</p>
                                 </div>
@@ -206,8 +244,8 @@
                     <h2 id="details-car-name" class="text-3xl font-extrabold text-gray-900 text-center mb-2"></h2>
                     <p id="details-car-subtitle" class="text-md text-red-600 font-semibold text-center mb-6"></p>
 
-                    <!-- Car Image (Uses the same URL as the selected card) -->
-                    <img id="details-car-image" src="" alt="Selected Car" class="w-full h-40 object-cover rounded-xl shadow-lg mb-6 border border-gray-200">
+                    <!-- Car Image (Uses the same URL as the selected card) - Class changed to object-contain -->
+                    <img id="details-car-image" src="" alt="Selected Car" class="w-full h-40 object-contain rounded-xl shadow-lg mb-6 border border-gray-200">
 
                     <h3 class="text-xl font-bold text-gray-800 mb-3 border-b pb-1">Specifications</h3>
                     <dl class="space-y-2 text-gray-700">
@@ -244,20 +282,7 @@
                 </div>
             </div>
             
-            <!-- Other Pages (Unchanged) -->
-            <!-- 1. Play Online Page Content -->
-            <div id="play-online" class="page bg-white rounded-lg shadow-xl p-6">
-                <h2 class="text-2xl font-semibold mb-4 text-gray-700">Play Online Mode</h2>
-                <p class="text-gray-600 mb-6">
-                    This screen would handle multi-player aspects, leaderboards, and connecting users for online races or challenges.
-                </p>
-                <!-- Back Button -->
-                <button onclick="showPage('menu')" class="w-full bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-600 transition-colors">
-                    ← Back to Menu
-                </button>
-            </div>
-
-            <!-- 2. CPS Tester Page Content -->
+            <!-- 1. CPS Tester Page Content -->
             <div id="cps-tester" class="page bg-white rounded-lg shadow-2xl p-6">
                 <h2 class="text-3xl font-extrabold mb-4 text-gray-800 text-center">CPS Tester</h2>
                 <!-- ... CPS Tester content here ... -->
@@ -306,7 +331,7 @@
                 </button>
             </div>
 
-            <!-- 3. Reaction Tester Page Content -->
+            <!-- 2. Reaction Tester Page Content -->
             <div id="reaction-tester" class="page bg-white rounded-lg shadow-xl p-6">
                 <h2 class="text-3xl font-extrabold mb-4 text-red-600 text-center">Reaction Time Tester</h2>
 
@@ -347,7 +372,7 @@
             'AE86': {
                 name: 'Toyota AE86 Trueno',
                 subtitle: 'The Tofu Delivery Legend',
-                image: 'https://placehold.co/400x200/FACC15/1F2937?text=AE86+Trueno', // New high-contrast image
+                image: 'https://placehold.co/400x200/FACC15/1F2937?text=AE86+Trueno', 
                 engine: '4A-GEU 1.6L I4',
                 hp: '130 hp @ 6,600 rpm',
                 torque: '115 lb-ft @ 5,200 rpm',
@@ -357,7 +382,7 @@
             'GTR': {
                 name: 'Nissan Skyline GT-R (R34)',
                 subtitle: 'Godzilla: King of the Road',
-                image: 'https://placehold.co/400x200/2563EB/ffffff?text=Skyline+GT-R', // New high-contrast image
+                image: 'https://placehold.co/400x200/2563EB/ffffff?text=Skyline+GT-R', 
                 engine: 'RB26DETT 2.6L I6 Twin-Turbo',
                 hp: '280 hp (claimed) / ~330 hp (actual)',
                 torque: '260 lb-ft @ 4,400 rpm',
@@ -367,7 +392,7 @@
             'BRZ': {
                 name: 'Subaru BRZ',
                 subtitle: 'The Agile Handler',
-                image: 'https://placehold.co/400x200/6366F1/ffffff?text=Subaru+BRZ', // New high-contrast image
+                image: 'https://placehold.co/400x200/4F46E5/ffffff?text=Subaru+BRZ', // Placeholder
                 engine: 'FA20 2.0L H4 Boxer',
                 hp: '200 hp @ 7,000 rpm',
                 torque: '151 lb-ft @ 6,400 rpm',
@@ -428,7 +453,11 @@
         function showCarSelectView() {
             carDetailsView.classList.add('hidden');
             carSelectView.classList.remove('hidden');
-            updateIndicators(Math.round(document.getElementById('car-carousel').scrollLeft / document.getElementById('car-carousel').clientWidth));
+            // Ensure indicators are updated when returning to select view
+            const carousel = document.getElementById('car-carousel');
+            if (carousel) {
+                updateIndicators(Math.round(carousel.scrollLeft / carousel.clientWidth));
+            }
         }
 
         /** Shows the car details view within the practice page. */
@@ -462,6 +491,8 @@
 
         function scrollCarousel(direction) {
             const container = document.getElementById('car-carousel');
+            if (!container) return;
+
             const scrollAmount = container.clientWidth;
             container.scrollBy({
                 left: scrollAmount * direction,
@@ -497,10 +528,6 @@
             });
         }
         
-        // Init indicators
-        updateIndicators(0);
-
-
         // --- CPS Tester Logic (Unchanged from previous version) ---
         let cpsGameState = 'IDLE';
         let clicks = 0;
@@ -553,9 +580,11 @@
             if (cpsTestArea) cpsTestArea.classList.remove('hidden');
             if (cpsResultsSummary) cpsResultsSummary.classList.add('hidden');
 
+            // Remove existing listeners to prevent duplicates
             if (clickArea) {
                 clickArea.removeEventListener('mousedown', handleCPSClick);
                 clickArea.removeEventListener('touchstart', handleCPSClick);
+                // Add new listeners
                 clickArea.addEventListener('mousedown', handleCPSClick);
                 clickArea.addEventListener('touchstart', handleCPSClick);
             }
@@ -660,13 +689,13 @@
         const reactionRankDisplay = document.getElementById('reaction-rank');
         
         function getReactionRank(time) {
-            if (time <= 150) {
+            if (time < 120) {
                 return '🌌 Ultra Instinct 🚀';
-            } else if (time < 50) {
+            } else if (time <= 160) {
                 return '🏎️ F1 Racer 🏆';
-            } else if (time <= 250) {
+            } else if (time <= 210) {
                 return '🥊 Fighter 💪';
-            } else if (time <= 400) {
+            } else if (time <= 270) {
                 return '🧍 Average';
             } else {
                 return '🐌 Very Slow 🐢';
@@ -778,8 +807,11 @@
             });
         }
         
-        // Initialize the view to show the menu
-        showPage('menu');
+        window.onload = function() {
+            // Initialize the view to show the menu
+            showPage('menu');
+            updateIndicators(0);
+        };
     </script>
 
 </body>
