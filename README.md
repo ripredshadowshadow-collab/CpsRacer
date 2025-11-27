@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE:html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Main Menu</title>
+    <title>Interactive Grid Game</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Configure Tailwind to use Inter font -->
@@ -31,43 +31,38 @@
         /* Basic body styling */
         body {
             font-family: 'Inter', 'sans-serif';
-            /* NOTE: Removed overflow: hidden; to allow the content to exceed the viewport height if needed */
             background-color: transparent; 
-            /* Flex layout to center the content */
             display: flex;
             align-items: center;
             justify-content: center;
             padding-top: 3rem;
             padding-bottom: 3rem;
             min-height: 100vh;
-            /* Allow the whole body to scroll if the centered content is too big */
             overflow-y: auto; 
         }
         
         /* 1. Full-screen Video Background Implementation */
         #background-video {
-            position: fixed; /* Anchors it to the viewport */
+            position: fixed; 
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ensures video covers the whole screen */
-            z-index: 0; /* Ensures it is the lowest layer (background) */
-            background-color: #333; /* Dark fallback in case video fails */
-            /* Add a slight dark filter for better readability of the foreground content */
+            object-fit: cover; 
+            z-index: 0; 
+            background-color: #333; 
             filter: brightness(0.6) grayscale(0.1); 
         }
 
         /* 2. Main Content Container Styling for Readability */
         .main-menu-container {
-            z-index: 10; /* Puts content clearly above the video */
+            z-index: 10; 
             position: relative;
-            /* UPDATED: Increased opacity for better contrast */
             background-color: rgba(255, 255, 255, 0.9); 
-            backdrop-filter: blur(5px); /* Optional: adds a subtle blur effect for polish */
+            backdrop-filter: blur(5px); 
             
             /* CRITICAL FIX: Constrain height and allow internal scrolling */
-            max-height: calc(100vh - 6rem); /* 100% viewport height minus the 3rem top/bottom body padding */
+            max-height: calc(100vh - 6rem); 
             overflow-y: auto; /* IMPORTANT: Enable internal vertical scrolling */
         }
 
@@ -91,8 +86,8 @@
         }
         /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
         
         /* Utility for smooth view transitions within a page */
@@ -103,12 +98,62 @@
         /* Styling for the car card selection to make it look professional */
         .car-card {
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-            background-color: #f7f7f7; /* Keep cards slightly off-white */
+            background-color: #f7f7f7; 
         }
         .car-card:hover {
             transform: scale(1.02);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
+        
+        /* Custom CSS for the Game Track Visuals (GRID GAME) */
+        #game-track {
+            position: relative;
+            background-color: #1a1a1a; /* Dark road color */
+            overflow: hidden;
+            cursor: pointer; /* Indicate it is clickable */
+            border-left: 10px solid #555;
+            border-right: 10px solid #555;
+            
+            /* Add lane dividers for a visual grid effect */
+            background-image: linear-gradient(to bottom, #444 2px, transparent 2px);
+            background-size: 100% 20%; /* 5 lanes total (100% / 5 = 20%) */
+        }
+        
+        /* Style for the car (fixed X position, dynamic Y position) */
+        #game-car {
+            transition: top 0.15s ease-in-out; /* Smooth vertical lane change */
+        }
+        
+        /* Style for the traps (dynamic X and Y position) */
+        .trap {
+            position: absolute;
+            width: 20%; /* Same width as the car */
+            height: 20%; /* Same height as a lane */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            transition: left 0.1s linear, opacity 0.1s linear; /* Smooth trap movement */
+            pointer-events: none; /* Make sure clicks pass through traps to the track */
+        }
+        
+        /* Style for game over message */
+        #game-over-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(220, 38, 38, 0.9);
+            color: white;
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center py-12">
@@ -134,7 +179,7 @@
                     <a href="javascript:void(0)" onclick="showPage('practice')"
                        class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-red-600 rounded-t-lg hover:bg-red-700 transition-colors duration-200">
                         <span class="text-xl mr-3" role="img" aria-label="Race Flag">🏁</span>
-                        Practice
+                        Practice (Grid Game)
                     </a>
                 </li>
                 
@@ -167,7 +212,7 @@
         <!-- Dynamic Content Pages -->
         <div id="pages-container" class="mt-8">
 
-            <!-- Practice Page Content (Handles three views: Car Select, Car Details, Map Selection) -->
+            <!-- Practice Page Content (Handles four views: Car Select, Car Details, Map Selection, Driving View) -->
             <div id="practice" class="page bg-white rounded-lg shadow-xl p-6">
                 
                 <!-- 1. Car Selection View (Default) -->
@@ -210,7 +255,7 @@
                                 </div>
                             </div>
 
-                            <!-- Car 3: BRZ (Image) - Reverted to placeholder after background change -->
+                            <!-- Car 3: BRZ (Image) -->
                             <div class="snap-center shrink-0 w-full flex flex-col items-center">
                                 <div onclick="selectCar('BRZ')" class="car-card w-full bg-gray-50 rounded-xl border-2 border-gray-200 p-6 flex flex-col items-center cursor-pointer hover:border-indigo-600 transition-all active:scale-[0.98]">
                                     <img src="https://placehold.co/400x200/4F46E5/ffffff?text=Subaru+BRZ"
@@ -249,7 +294,7 @@
                     <h2 id="details-car-name" class="text-3xl font-extrabold text-gray-900 text-center mb-2"></h2>
                     <p id="details-car-subtitle" class="text-md text-red-600 font-semibold text-center mb-6"></p>
 
-                    <!-- Car Image (Uses the same URL as the selected card) - Class changed to object-contain -->
+                    <!-- Car Image -->
                     <img id="details-car-image" src="" alt="Selected Car" class="w-full h-40 object-contain rounded-xl shadow-lg mb-6 border border-gray-200">
 
                     <h3 class="text-xl font-bold text-gray-800 mb-3 border-b pb-1">Specifications</h3>
@@ -277,9 +322,8 @@
 
                     <!-- Action Buttons -->
                     <div class="space-y-3">
-                        <!-- UPDATED: Calls showMapSelectionView() -->
                         <button onclick="showMapSelectionView()" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors shadow-md">
-                            Start Race Practice
+                            Start Grid Race
                         </button>
                         <button onclick="showCarSelectView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
                             ← Select a Different Car
@@ -287,18 +331,18 @@
                     </div>
                 </div>
 
-                <!-- 3. Map Selection View (NEW CONTENT) -->
+                <!-- 3. Map Selection View -->
                 <div id="map-selection-view" class="view-transition hidden">
                     <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-6">Choose Practice Mode</h2>
                     
-                    <!-- Random Map Option -->
+                    <!-- Random Map Option (Now starts the game) -->
                     <button onclick="startRace('random')" class="w-full mb-4 p-4 bg-green-600 text-white font-bold text-xl rounded-lg hover:bg-green-700 transition-colors shadow-lg flex items-center justify-center">
-                        <span class="mr-3 text-2xl" role="img" aria-label="Dice">🎲</span> Random Map
+                        <span class="mr-3 text-2xl" role="img" aria-label="Dice">🎲</span> Start Grid Game
                     </button>
 
-                    <!-- Maps Option -->
+                    <!-- Maps Option (Placeholder) -->
                     <button onclick="showMapsList()" class="w-full mb-6 p-4 bg-blue-600 text-white font-bold text-xl rounded-lg hover:bg-blue-700 transition-colors shadow-lg flex items-center justify-center">
-                        <span class="mr-3 text-2xl" role="img" aria-label="Map">🗺️</span> Select Map
+                        <span class="mr-3 text-2xl" role="img" aria-label="Map">🗺️</span> Map Selection (Disabled)
                     </button>
 
                     <!-- Back Button -->
@@ -306,12 +350,65 @@
                         ← Back to Car Details
                     </button>
                 </div>
+                
+                <!-- 4. Driving View (GRID GAME AREA) -->
+                <div id="driving-view" class="view-transition hidden">
+                    <h2 class="text-3xl font-extrabold text-red-600 text-center mb-4">Grid Avoidance Game</h2>
+                    <p class="text-center text-gray-600 mb-6 font-semibold text-lg">
+                        <span class="text-blue-600">W</span> (Up/Step) | 
+                        <span class="text-red-600">S</span> (Down/Step) |
+                        <span class="text-yellow-600">CLICK/TOUCH</span> (Step Forward)
+                    </p>
+
+                    <!-- Game Container -->
+                    <div id="game-track" class="w-full h-80 bg-gray-100 rounded-lg border-4 border-gray-800 relative overflow-hidden mb-6">
+                        
+                        <!-- Game Over Message -->
+                        <div id="game-over-message" class="hidden">
+                            <p class="text-6xl font-extrabold mb-4">CRASH!</p>
+                            <p class="text-2xl font-semibold mb-6">Game Over</p>
+                            <p class="text-xl font-medium mb-4">Final Score: <span id="final-game-score" class="font-extrabold">0</span> Grids</p>
+                            <button onclick="CarGame.reset();" class="bg-white text-red-600 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition-colors shadow-md">
+                                Try Again
+                            </button>
+                        </div>
+                        
+                        <!-- Car Icon (Fixed on the left, moves vertically) -->
+                        <div id="game-car" 
+                             class="absolute left-1/4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-3xl transition-all duration-75 ease-linear" 
+                             style="transform: translateY(-50%);">
+                            <!-- Top-down view SVG representation of a car -->
+                            <svg class="w-full h-full text-red-700" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="5" y="5" width="14" height="14" rx="4" ry="4"/>
+                                <rect x="6" y="6" width="12" height="12" fill="white"/>
+                                <rect x="7" y="7" width="10" height="10" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        
+                        <!-- Traps will be rendered here dynamically -->
+                        <div id="trap-container">
+                            <!-- Traps elements go here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Score Display -->
+                    <div class="p-4 bg-red-100 rounded-xl shadow-lg flex justify-between items-center border-b-4 border-red-400">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Grids Safely Passed</p>
+                        </div>
+                        <p id="current-score-display" class="text-5xl font-extrabold text-red-700">0</p>
+                    </div>
+
+                    <!-- Back Button -->
+                    <button onclick="endRacePractice()" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        ← End Game
+                    </button>
+                </div>
             </div>
             
-            <!-- 1. CPS Tester Page Content -->
+            <!-- 1. CPS Tester Page Content (Unchanged) -->
             <div id="cps-tester" class="page bg-white rounded-lg shadow-2xl p-6">
                 <h2 class="text-3xl font-extrabold mb-4 text-gray-800 text-center">CPS Tester</h2>
-                <!-- ... CPS Tester content here ... -->
                 <div class="flex justify-center space-x-2 mb-6" id="cps-duration-selector">
                     <button onclick="setCPSTime(1)" id="duration-1" class="duration-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-300 transition-colors">1s</button>
                     <button onclick="setCPSTime(5)" id="duration-5" class="duration-btn bg-indigo-600 text-white py-2 px-4 rounded-lg font-medium ring-2 ring-indigo-400 transition-colors">5s</button>
@@ -357,7 +454,7 @@
                 </button>
             </div>
 
-            <!-- 2. Reaction Tester Page Content -->
+            <!-- 2. Reaction Tester Page Content (Unchanged) -->
             <div id="reaction-tester" class="page bg-white rounded-lg shadow-xl p-6">
                 <h2 class="text-3xl font-extrabold mb-4 text-red-600 text-center">Reaction Time Tester</h2>
 
@@ -394,9 +491,9 @@
 
     <script>
         // --- Global State ---
-        let currentSelectedCarId = null; // Stores the ID of the currently selected car.
+        let currentSelectedCarId = null; 
 
-        // --- Car Data (Mock data, update this section with your actual details later!) ---
+        // --- Car Data (Mock data) ---
         const carData = {
             'AE86': {
                 name: 'Toyota AE86 Trueno',
@@ -421,7 +518,7 @@
             'BRZ': {
                 name: 'Subaru BRZ',
                 subtitle: 'The Agile Handler',
-                image: 'https://placehold.co/400x200/4F46E5/ffffff?text=Subaru+BRZ', // Placeholder
+                image: 'https://placehold.co/400x200/4F46E5/ffffff?text=Subaru+BRZ', 
                 engine: 'FA20 2.0L H4 Boxer',
                 hp: '200 hp @ 7,000 rpm',
                 torque: '151 lb-ft @ 6,400 rpm',
@@ -441,14 +538,14 @@
             // 1. Reset games if navigating away
             if (currentPage === 'cps-tester' && pageId !== 'cps-tester') resetCPSTester();
             if (currentPage === 'reaction-tester' && pageId !== 'reaction-tester') resetReactionTester();
-            
+            if (currentPage === 'driving-view' && pageId !== 'driving-view') CarGame.stop(); // Stop the game loop
+
             // If navigating to practice, ensure we start on the selection view
             if (pageId === 'practice') {
-                // If a car is already selected, start at the car details or map selection (if coming from menu, go to car select)
                 if (!currentSelectedCarId || currentPage === 'menu') {
                      showCarSelectView();
                 } else {
-                    showCarDetailsView(); // Or keep the last view
+                    showCarDetailsView(); 
                 }
             }
 
@@ -479,17 +576,18 @@
             currentPage = pageId;
         }
 
-        // --- Practice Mode Logic (Carousel + Details + Map Selection) ---
+        // --- Practice Mode Logic (Carousel + Details + Map Selection + Driving) ---
         const carSelectView = document.getElementById('car-select-view');
         const carDetailsView = document.getElementById('car-details-view');
-        const mapSelectionView = document.getElementById('map-selection-view'); // NEW ELEMENT
+        const mapSelectionView = document.getElementById('map-selection-view');
+        const drivingView = document.getElementById('driving-view');
 
         /** Transitions to the Car Selection View */
         function showCarSelectView() {
             carDetailsView.classList.add('hidden');
-            mapSelectionView.classList.add('hidden'); // Ensure map selection is hidden
+            mapSelectionView.classList.add('hidden'); 
+            drivingView.classList.add('hidden'); // Hide driving view
             carSelectView.classList.remove('hidden');
-            // Ensure indicators are updated when returning to select view
             const carousel = document.getElementById('car-carousel');
             if (carousel) {
                 updateIndicators(Math.round(carousel.scrollLeft / carousel.clientWidth));
@@ -499,7 +597,8 @@
         /** Transitions to the Car Details View */
         function showCarDetailsView() {
             carSelectView.classList.add('hidden');
-            mapSelectionView.classList.add('hidden'); // Ensure map selection is hidden
+            mapSelectionView.classList.add('hidden'); 
+            drivingView.classList.add('hidden'); // Hide driving view
             carDetailsView.classList.remove('hidden');
         }
 
@@ -507,8 +606,26 @@
         function showMapSelectionView() {
             carDetailsView.classList.add('hidden');
             carSelectView.classList.add('hidden');
+            drivingView.classList.add('hidden'); // Hide driving view
             mapSelectionView.classList.remove('hidden');
+            CarGame.stop(); // Ensure the game stops if we exit via the 'End Practice' button
         }
+        
+        /** Transitions to the Driving View (Game) */
+        function showDrivingView() {
+            carDetailsView.classList.add('hidden');
+            mapSelectionView.classList.add('hidden'); 
+            carSelectView.classList.add('hidden');
+            drivingView.classList.remove('hidden');
+            CarGame.init(); // Initialize and start the game
+        }
+        
+        /** End the game and return to map selection */
+        function endRacePractice() {
+            CarGame.stop();
+            showMapSelectionView();
+        }
+
 
         /**
          * Fills the details view with the selected car's data and transitions the view.
@@ -516,7 +633,7 @@
          */
         function selectCar(carKey) {
             const data = carData[carKey];
-            if (!data) return; // Guard clause
+            if (!data) return; 
 
             // Store selected car ID
             currentSelectedCarId = carKey;
@@ -536,18 +653,18 @@
             showCarDetailsView();
         }
 
-        /** Handles starting the race (called from Map Selection View) */
+        /** Handles starting the race (now directs to the driving view for 'random') */
         function startRace(mode) {
-            let carName = carData[currentSelectedCarId] ? carData[currentSelectedCarId].name : 'Unknown Car';
-            let mapName = mode === 'random' ? 'a Random Map' : 'Selected Map';
-            
-            // Use a simple alertBox for now, as no game logic is implemented
-            alertBox(`Starting race in ${mode.toUpperCase()} mode with the ${carName} on ${mapName}! (Implement game logic here)`);
+            if (mode === 'random') {
+                showDrivingView();
+            } else {
+                alertBox('Map selection is disabled for the Grid Game. Please press "Start Grid Game".');
+            }
         }
 
         /** Placeholder for showing the map list (future feature) */
         function showMapsList() {
-            alertBox('Functionality to select a specific map is not yet implemented. Try Random Map!');
+            alertBox('Functionality to select a specific map is not yet implemented for the Grid Game.');
         }
 
         function scrollCarousel(direction) {
@@ -560,14 +677,12 @@
                 behavior: 'smooth'
             });
             
-            // Update indicators after scroll
             setTimeout(() => {
                 const index = Math.round(container.scrollLeft / container.clientWidth);
                 updateIndicators(index);
             }, 300);
         }
         
-        // Listen to scroll to update indicators
         const carCarousel = document.getElementById('car-carousel');
         if (carCarousel) {
             carCarousel.addEventListener('scroll', () => {
@@ -589,6 +704,224 @@
             });
         }
         
+        // --- Grid Game Logic (OVERHAUL) ---
+        const CarGame = {
+            // Game Constants
+            GRID_ROWS: 5,               // 5 vertical lanes
+            GRID_HEIGHT_PERCENT: 20,    // 100% / 5 lanes
+            MOVE_FORWARD_STEPS: 2,      // 1 click = 2 grids movement
+            TRAP_SPAWN_RANGE: 4,        // Traps spawn 4 grids ahead
+            
+            // DOM Elements
+            car: null,
+            track: null,
+            trapContainer: null,
+            scoreDisplay: null,
+            gameOverMessage: null,
+            finalScoreDisplay: null,
+
+            // Game State
+            currentLane: 2, // 0 (top) to 4 (bottom) - Start center
+            score: 0,
+            traps: [],      // [{lane: 0-4, forwardSteps: 4}]
+            isGameOver: true,
+            
+            init() {
+                this.car = document.getElementById('game-car');
+                this.track = document.getElementById('game-track');
+                this.trapContainer = document.getElementById('trap-container');
+                this.scoreDisplay = document.getElementById('current-score-display');
+                this.gameOverMessage = document.getElementById('game-over-message');
+                this.finalScoreDisplay = document.getElementById('final-game-score');
+                
+                if (!this.car || !this.track || !this.trapContainer || !this.scoreDisplay || !this.gameOverMessage) {
+                    console.error("Game elements not found.");
+                    return;
+                }
+                
+                // Set up event listeners
+                this.boundHandleKey = this.handleKey.bind(this);
+                this.boundHandleClick = this.handleClick.bind(this);
+                document.addEventListener('keydown', this.boundHandleKey);
+                this.track.addEventListener('mousedown', this.boundHandleClick);
+                this.track.addEventListener('touchstart', this.boundHandleClick);
+                
+                this.reset();
+            },
+            
+            stop() {
+                // Clean up listeners
+                document.removeEventListener('keydown', this.boundHandleKey);
+                this.track.removeEventListener('mousedown', this.boundHandleClick);
+                this.track.removeEventListener('touchstart', this.boundHandleClick);
+            },
+
+            reset() {
+                this.isGameOver = false;
+                this.currentLane = 2; // Middle lane
+                this.score = 0;
+                this.traps = [];
+                
+                this.gameOverMessage.style.display = 'none';
+                
+                // Initial render
+                this.render();
+                this.updateDisplay();
+                
+                // Spawn first set of traps
+                this.spawnTraps(this.TRAP_SPAWN_RANGE);
+            },
+            
+            handleKey(e) {
+                if (this.isGameOver) return;
+                const key = e.key.toLowerCase();
+                
+                let direction = 0; // 0 for stationary step, -1 for up, 1 for down
+
+                if (key === 'w') {
+                    direction = -1;
+                    e.preventDefault(); 
+                } else if (key === 's') {
+                    direction = 1;
+                    e.preventDefault();
+                } else {
+                    return;
+                }
+                
+                this.changeLaneAndStep(direction);
+            },
+
+            handleClick(e) {
+                if (this.isGameOver) return;
+                e.preventDefault();
+                // Click/Touch only triggers a forward step (0 vertical movement)
+                this.changeLaneAndStep(0); 
+            },
+            
+            changeLaneAndStep(direction) {
+                if (this.isGameOver) return;
+                
+                // 1. Calculate new lane (if direction is not 0)
+                if (direction !== 0) {
+                    const newLane = this.currentLane + direction;
+                    if (newLane >= 0 && newLane < this.GRID_ROWS) {
+                        this.currentLane = newLane;
+                    }
+                }
+                
+                // 2. Execute forward step (moves traps)
+                this.stepForward();
+                
+                // 3. Render immediately
+                this.render();
+            },
+
+            stepForward() {
+                if (this.isGameOver) return;
+                
+                // 1. Collision Check (Trap is at forwardSteps=0)
+                const collisionTrap = this.traps.find(trap => 
+                    trap.forwardSteps === 0 && trap.lane === this.currentLane
+                );
+                
+                if (collisionTrap) {
+                    this.gameOver();
+                    return;
+                }
+
+                // 2. Move Traps (2 grids forward, towards the car)
+                this.traps = this.traps.map(trap => ({
+                    ...trap,
+                    forwardSteps: trap.forwardSteps - this.MOVE_FORWARD_STEPS
+                })).filter(trap => trap.forwardSteps >= -this.MOVE_FORWARD_STEPS); // Remove traps that are now behind the car
+
+                // 3. Update Score
+                this.score += this.MOVE_FORWARD_STEPS; 
+                this.updateDisplay();
+
+                // 4. Trap Spawning Logic
+                // Spawn a new set of traps when the score is a multiple of 10
+                if (this.score % 10 === 0 && this.score > 0) { 
+                    this.spawnTraps(this.TRAP_SPAWN_RANGE);
+                }
+            },
+            
+            spawnTraps(distance) {
+                // Do not spawn if the designated spawn spot already has a trap
+                const existingTrapAtSpawn = this.traps.find(trap => trap.forwardSteps === distance);
+                if (existingTrapAtSpawn) return;
+
+                const availableLanes = [...Array(this.GRID_ROWS).keys()];
+                const trapsToSpawn = Math.random() < 0.3 ? 2 : 1; // 30% chance of 2 traps, 70% chance of 1 trap
+                
+                let spawnedLanes = [];
+
+                for (let i = 0; i < trapsToSpawn; i++) {
+                    // Pick a random lane that hasn't been used this step
+                    const safeLanes = availableLanes.filter(l => !spawnedLanes.includes(l));
+                    if (safeLanes.length === 0) break;
+
+                    const randomLaneIndex = Math.floor(Math.random() * safeLanes.length);
+                    const lane = safeLanes[randomLaneIndex];
+                    
+                    this.traps.push({ lane, forwardSteps: distance });
+                    spawnedLanes.push(lane);
+                }
+            },
+
+            render() {
+                // 1. Render Car Position
+                const topPercent = this.currentLane * this.GRID_HEIGHT_PERCENT + (this.GRID_HEIGHT_PERCENT / 2);
+                this.car.style.top = `${topPercent}%`;
+                
+                // 2. Render Traps
+                this.trapContainer.innerHTML = '';
+                this.traps.forEach(trap => {
+                    const trapElement = document.createElement('div');
+                    trapElement.classList.add('trap');
+                    
+                    // Vertical position (Y-axis)
+                    const trapTopPercent = trap.lane * this.GRID_HEIGHT_PERCENT;
+                    trapElement.style.top = `${trapTopPercent}%`;
+                    
+                    // Horizontal position (X-axis)
+                    // The "grids" are horizontal units. If 4 grids ahead is 100% (off-screen)
+                    // We need a reference for the "grid" width. Let's assume 1 grid unit = 15% width.
+                    // Car is at ~25% left. Traps start at ~100% (off-screen)
+                    // We map forwardSteps 4 -> 100% and 0 -> 25% (where car is)
+                    const gridWidth = 75; // The range between car and edge (100 - 25)
+                    const maxSteps = this.TRAP_SPAWN_RANGE; // 4
+                    
+                    // Example: 
+                    // forwardSteps=4 (spawn) -> left = 100%
+                    // forwardSteps=0 (collision) -> left = 25%
+                    // forwardSteps=2 (middle) -> left = 62.5%
+                    
+                    const leftPosition = 25 + (trap.forwardSteps / maxSteps) * gridWidth;
+                    
+                    // If the left position is less than the car's start position (25%), make it red (danger zone)
+                    if (leftPosition < 25) {
+                        trapElement.style.opacity = 0.5;
+                    }
+                    
+                    trapElement.style.left = `${leftPosition}%`;
+                    trapElement.innerHTML = '💥';
+                    
+                    this.trapContainer.appendChild(trapElement);
+                });
+            },
+
+            updateDisplay() {
+                this.scoreDisplay.textContent = this.score;
+            },
+
+            gameOver() {
+                this.isGameOver = true;
+                this.finalScoreDisplay.textContent = this.score;
+                this.gameOverMessage.style.display = 'flex';
+            }
+        };
+
         // --- CUSTOM ALERT BOX (Replaces alert() and confirm()) ---
         function alertBox(message) {
             const existingAlert = document.getElementById('custom-alert');
@@ -660,11 +993,9 @@
             if (cpsTestArea) cpsTestArea.classList.remove('hidden');
             if (cpsResultsSummary) cpsResultsSummary.classList.add('hidden');
 
-            // Remove existing listeners to prevent duplicates
             if (clickArea) {
                 clickArea.removeEventListener('mousedown', handleCPSClick);
                 clickArea.removeEventListener('touchstart', handleCPSClick);
-                // Add new listeners
                 clickArea.addEventListener('mousedown', handleCPSClick);
                 clickArea.addEventListener('touchstart', handleCPSClick);
             }
@@ -891,6 +1222,14 @@
             // Initialize the view to show the menu
             showPage('menu');
             updateIndicators(0);
+            
+            // Initial element binding for CarGame
+            CarGame.car = document.getElementById('game-car');
+            CarGame.track = document.getElementById('game-track');
+            CarGame.trapContainer = document.getElementById('trap-container');
+            CarGame.scoreDisplay = document.getElementById('current-score-display');
+            CarGame.gameOverMessage = document.getElementById('game-over-message');
+            CarGame.finalScoreDisplay = document.getElementById('final-game-score');
         };
     </script>
 
