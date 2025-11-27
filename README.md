@@ -479,13 +479,13 @@
          */
         function getReactionRank(time) {
             // Tier thresholds based on competitive/real-world human benchmarks
-            if (time < 120) {
+            if (time < 150) {
                 return '🌌 Ultra Instinct 🚀';
-            } else if (time <= 110) {
+            } else if (time <= 50) {
                 return '🏎️ F1 Racer 🏆';
-            } else if (time <= 250) {
+            } else if (time <= 300) {
                 return '🥊 Fighter 💪';
-            } else if (time <=350) {
+            } else if (time <=400) {
                 return '🧍 Average';
             } else {
                 return '🐌 Very Slow 🐢';
