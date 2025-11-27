@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,9 +31,7 @@
         /* Basic body styling */
         body {
             font-family: 'Inter', 'sans-serif';
-            /* Ensure the body doesn't scroll when using fixed video */
-            overflow: hidden;
-            /* Remove default gray background */
+            /* NOTE: Removed overflow: hidden; to allow the content to exceed the viewport height if needed */
             background-color: transparent; 
             /* Flex layout to center the content */
             display: flex;
@@ -41,6 +40,8 @@
             padding-top: 3rem;
             padding-bottom: 3rem;
             min-height: 100vh;
+            /* Allow the whole body to scroll if the centered content is too big */
+            overflow-y: auto; 
         }
         
         /* 1. Full-screen Video Background Implementation */
@@ -61,9 +62,13 @@
         .main-menu-container {
             z-index: 10; /* Puts content clearly above the video */
             position: relative;
-            /* Made slightly transparent (0.7 opacity) to show the video behind it */
-            background-color: rgba(255, 255, 255, 0.7); 
+            /* UPDATED: Increased opacity for better contrast */
+            background-color: rgba(255, 255, 255, 0.9); 
             backdrop-filter: blur(5px); /* Optional: adds a subtle blur effect for polish */
+            
+            /* CRITICAL FIX: Constrain height and allow internal scrolling */
+            max-height: calc(100vh - 6rem); /* 100% viewport height minus the 3rem top/bottom body padding */
+            overflow-y: auto; /* IMPORTANT: Enable internal vertical scrolling */
         }
 
         /* Hide pages by default */
