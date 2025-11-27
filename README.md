@@ -122,12 +122,17 @@
         /* Style for the car (fixed X position, dynamic Y position) */
         #game-car {
             transition: top 0.15s ease-in-out; /* Smooth vertical lane change */
+            /* Add a slight Z-index so it always overlaps traps */
+            z-index: 15; 
+            /* Car needs to be wider than tall now that it's facing right */
+            width: 70px;
+            height: 45px; 
         }
         
         /* Style for the traps (dynamic X and Y position) */
         .trap {
             position: absolute;
-            width: 20%; /* Same width as the car */
+            width: 20%; /* Same width as the car lane */
             height: 20%; /* Same height as a lane */
             display: flex;
             align-items: center;
@@ -135,6 +140,7 @@
             font-size: 2rem;
             transition: left 0.1s linear, opacity 0.1s linear; /* Smooth trap movement */
             pointer-events: none; /* Make sure clicks pass through traps to the track */
+            z-index: 10;
         }
         
         /* Style for game over message */
@@ -375,14 +381,9 @@
                         
                         <!-- Car Icon (Fixed on the left, moves vertically) -->
                         <div id="game-car" 
-                             class="absolute left-1/4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center text-3xl transition-all duration-75 ease-linear" 
+                             class="absolute left-1/4 top-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-75 ease-linear" 
                              style="transform: translateY(-50%);">
-                            <!-- Top-down view SVG representation of a car -->
-                            <svg class="w-full h-full text-red-700" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="5" y="5" width="14" height="14" rx="4" ry="4"/>
-                                <rect x="6" y="6" width="12" height="12" fill="white"/>
-                                <rect x="7" y="7" width="10" height="10" fill="currentColor"/>
-                            </svg>
+                            <!-- Selected Car SVG will be injected here -->
                         </div>
                         
                         <!-- Traps will be rendered here dynamically -->
@@ -491,9 +492,10 @@
 
     <script>
         // --- Global State ---
-        let currentSelectedCarId = null; 
+        let currentSelectedCarId = 'AE86'; // Default selected car
 
-        // --- Car Data (Mock data) ---
+        // --- Car Data (Mock data with SVG definition) ---
+        // Note: The SVG is slightly wider than tall (100x60 viewBox) to represent a horizontal, right-facing car.
         const carData = {
             'AE86': {
                 name: 'Toyota AE86 Trueno',
@@ -503,7 +505,25 @@
                 hp: '130 hp @ 6,600 rpm',
                 torque: '115 lb-ft @ 5,200 rpm',
                 drivetrain: 'FR (Front-Engine, Rear-Wheel Drive)',
-                special: 'Famous for its lightweight chassis, excellent drift balance, and appearance in Initial D. A classic JDM icon.'
+                special: 'Famous for its lightweight chassis, excellent drift balance, and appearance in Initial D. A classic JDM icon.',
+                svg: `
+                    <svg viewBox="0 0 100 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-yellow-500">
+                        <!-- Body (Boxy, Yellow/Gold) -->
+                        <rect x="10" y="10" width="80" height="40" rx="6" fill="currentColor"/> 
+                        <!-- Cabin (Darker) -->
+                        <rect x="25" y="15" width="45" height="30" rx="3" fill="#1F2937"/>
+                        <!-- Windshield (Front, slight angle on the right) -->
+                        <path d="M70 15 L80 10 L80 50 L70 45 Z" fill="#9CA3AF"/> 
+                        <!-- Headlights (Right side, pop-up hint) -->
+                        <rect x="75" y="10" width="10" height="3" rx="1" fill="#FFF"/>
+                        <rect x="75" y="47" width="10" height="3" rx="1" fill="#FFF"/>
+                        <!-- Wheels (Dark Gray) -->
+                        <circle cx="20" cy="10" r="8" fill="#4B5563"/>
+                        <circle cx="20" cy="50" r="8" fill="#4B5563"/>
+                        <circle cx="70" cy="10" r="8" fill="#4B5563"/>
+                        <circle cx="70" cy="50" r="8" fill="#4B5563"/>
+                    </svg>
+                `
             },
             'GTR': {
                 name: 'Nissan Skyline GT-R (R34)',
@@ -513,7 +533,27 @@
                 hp: '280 hp (claimed) / ~330 hp (actual)',
                 torque: '260 lb-ft @ 4,400 rpm',
                 drivetrain: 'AWD (ATTESA E-TS Pro)',
-                special: 'Known for its highly tuneable engine and advanced AWD system, making it an unbeatable track monster in its era.'
+                special: 'Known for its highly tuneable engine and advanced AWD system, making it an unbeatable track monster in its era.',
+                svg: `
+                    <svg viewBox="0 10 100 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-blue-600">
+                        <!-- Body (Aggressive, Blue) -->
+                        <rect x="5" y="5" width="90" height="50" rx="8" fill="currentColor"/>
+                        <!-- Cabin (Slightly narrower, Black) -->
+                        <rect x="25" y="10" width="45" height="40" rx="4" fill="#000000"/>
+                        <!-- Spoiler/Wing (Left side/Rear) -->
+                        <rect x="5" y="0" width="5" height="60" rx="1" fill="#1F2937"/>
+                        <!-- Taillights (Left side - Red Circles) -->
+                        <circle cx="8" cy="15" r="4" fill="#FF0000"/>
+                        <circle cx="8" cy="45" r="4" fill="#FF0000"/>
+                        <!-- Headlights (Right side - Angular yellow) -->
+                        <path d="M95 10 L95 50 L85 55 L85 5 Z" fill="#FFEB3B"/> 
+                        <!-- Wheels -->
+                        <circle cx="20" cy="5" r="8" fill="#4B5563"/>
+                        <circle cx="20" cy="55" r="8" fill="#4B5563"/>
+                        <circle cx="80" cy="5" r="8" fill="#4B5563"/>
+                        <circle cx="80" cy="55" r="8" fill="#4B5563"/>
+                    </svg>
+                `
             },
             'BRZ': {
                 name: 'Subaru BRZ',
@@ -523,7 +563,24 @@
                 hp: '200 hp @ 7,000 rpm',
                 torque: '151 lb-ft @ 6,400 rpm',
                 drivetrain: 'FR (Front-Engine, Rear-Wheel Drive)',
-                special: 'Designed purely for driving pleasure and balance. It prioritizes handling and driver feedback over raw straight-line speed.'
+                special: 'Designed purely for driving pleasure and balance. It prioritizes handling and driver feedback over raw straight-line speed.',
+                svg: `
+                    <svg viewBox="0 0 100 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-indigo-600">
+                        <!-- Body (Sleek, Indigo) -->
+                        <rect x="10" y="10" width="85" height="40" rx="10" fill="currentColor"/>
+                        <!-- Cabin (Glass, smooth curve) -->
+                        <path d="M25 10 C35 5, 65 5, 75 10 L75 50 C65 55, 35 55, 25 50 Z" fill="#9CA3AF"/>
+                        <!-- Headlights (Right side, sharp points) -->
+                        <polygon points="95,15 95,45 80,30" fill="#FFEB3B"/>
+                        <!-- Rear detail/Taillights (Left side) -->
+                        <rect x="10" y="20" width="5" height="20" fill="#FF4444" rx="2"/>
+                        <!-- Wheels -->
+                        <circle cx="20" cy="10" r="8" fill="#4B5563"/>
+                        <circle cx="20" cy="50" r="8" fill="#4B5563"/>
+                        <circle cx="80" cy="10" r="8" fill="#4B5563"/>
+                        <circle cx="80" cy="50" r="8" fill="#4B5563"/>
+                    </svg>
+                `
             }
         };
 
@@ -617,7 +674,9 @@
             mapSelectionView.classList.add('hidden'); 
             carSelectView.classList.add('hidden');
             drivingView.classList.remove('hidden');
-            CarGame.init(); // Initialize and start the game
+            
+            // Inject the selected car's SVG before starting the game
+            CarGame.init(currentSelectedCarId); 
         }
         
         /** End the game and return to map selection */
@@ -709,7 +768,7 @@
             // Game Constants
             GRID_ROWS: 5,               // 5 vertical lanes
             GRID_HEIGHT_PERCENT: 20,    // 100% / 5 lanes
-            MOVE_FORWARD_STEPS: 2,      // 1 click = 2 grids movement
+            MOVE_FORWARD_STEPS: 1,      // 1 click = 1 grid movement
             TRAP_SPAWN_RANGE: 4,        // Traps spawn 4 grids ahead
             
             // DOM Elements
@@ -726,7 +785,7 @@
             traps: [],      // [{lane: 0-4, forwardSteps: 4}]
             isGameOver: true,
             
-            init() {
+            init(carId) {
                 this.car = document.getElementById('game-car');
                 this.track = document.getElementById('game-track');
                 this.trapContainer = document.getElementById('trap-container');
@@ -739,6 +798,16 @@
                     return;
                 }
                 
+                // Set the correct car SVG
+                if (carData[carId] && carData[carId].svg) {
+                    this.car.innerHTML = carData[carId].svg;
+                } else {
+                    console.error("Selected car SVG not found. Using default.");
+                    // Fallback to a simple car shape if somehow the ID is missing
+                    this.car.innerHTML = carData['AE86'].svg; 
+                }
+
+
                 // Set up event listeners
                 this.boundHandleKey = this.handleKey.bind(this);
                 this.boundHandleClick = this.handleClick.bind(this);
@@ -793,9 +862,12 @@
 
             handleClick(e) {
                 if (this.isGameOver) return;
-                e.preventDefault();
-                // Click/Touch only triggers a forward step (0 vertical movement)
-                this.changeLaneAndStep(0); 
+                // Check if the click is on the track background, not a trap or the car
+                if (e.target.id === 'game-track' || e.target.id === 'trap-container') {
+                    e.preventDefault();
+                    // Click/Touch only triggers a forward step (0 vertical movement)
+                    this.changeLaneAndStep(0); 
+                }
             },
             
             changeLaneAndStep(direction) {
@@ -829,7 +901,7 @@
                     return;
                 }
 
-                // 2. Move Traps (2 grids forward, towards the car)
+                // 2. Move Traps (1 grid forward, towards the car)
                 this.traps = this.traps.map(trap => ({
                     ...trap,
                     forwardSteps: trap.forwardSteps - this.MOVE_FORWARD_STEPS
@@ -846,31 +918,45 @@
                 }
             },
             
+            /**
+             * Generates a trap pattern that leaves 1 or 2 adjacent safe lanes.
+             * @param {number} distance - The forward step distance at which to spawn the traps.
+             */
             spawnTraps(distance) {
-                // Do not spawn if the designated spawn spot already has a trap
+                // Ensure no trap is spawned if the designated spawn spot already has a trap
                 const existingTrapAtSpawn = this.traps.find(trap => trap.forwardSteps === distance);
                 if (existingTrapAtSpawn) return;
 
-                const availableLanes = [...Array(this.GRID_ROWS).keys()];
-                const trapsToSpawn = Math.random() < 0.3 ? 2 : 1; // 30% chance of 2 traps, 70% chance of 1 trap
-                
-                let spawnedLanes = [];
+                const allLanes = [...Array(this.GRID_ROWS).keys()]; // [0, 1, 2, 3, 4]
+                let safeLanes = [];
 
-                for (let i = 0; i < trapsToSpawn; i++) {
-                    // Pick a random lane that hasn't been used this step
-                    const safeLanes = availableLanes.filter(l => !spawnedLanes.includes(l));
-                    if (safeLanes.length === 0) break;
+                // 1. Decide on 1 or 2 safe grids (50/50 chance)
+                const numSafeLanes = Math.random() < 0.5 ? 1 : 2; 
 
-                    const randomLaneIndex = Math.floor(Math.random() * safeLanes.length);
-                    const lane = safeLanes[randomLaneIndex];
-                    
-                    this.traps.push({ lane, forwardSteps: distance });
-                    spawnedLanes.push(lane);
+                if (numSafeLanes === 1) {
+                    // Choose 1 random safe lane (0, 1, 2, 3, 4)
+                    const safeLane = Math.floor(Math.random() * this.GRID_ROWS);
+                    safeLanes.push(safeLane);
+                } else {
+                    // Choose 2 adjacent safe lanes: (0, 1), (1, 2), (2, 3), or (3, 4)
+                    // We only need to pick 4 starting positions to guarantee a pair of adjacent lanes
+                    const startingLane = Math.floor(Math.random() * (this.GRID_ROWS - 1)); // 0, 1, 2, or 3
+                    safeLanes.push(startingLane);
+                    safeLanes.push(startingLane + 1);
                 }
+
+                // 2. Determine trap lanes (all lanes NOT in safeLanes)
+                const trapLanes = allLanes.filter(lane => !safeLanes.includes(lane));
+
+                // 3. Spawn traps in all trap lanes
+                trapLanes.forEach(lane => {
+                    this.traps.push({ lane, forwardSteps: distance });
+                });
             },
 
             render() {
                 // 1. Render Car Position
+                // Calculate the center of the current lane: (lane index * 20%) + (20% / 2)
                 const topPercent = this.currentLane * this.GRID_HEIGHT_PERCENT + (this.GRID_HEIGHT_PERCENT / 2);
                 this.car.style.top = `${topPercent}%`;
                 
@@ -880,28 +966,28 @@
                     const trapElement = document.createElement('div');
                     trapElement.classList.add('trap');
                     
-                    // Vertical position (Y-axis)
+                    // Vertical position (Y-axis): Aligned to the top of the lane grid
                     const trapTopPercent = trap.lane * this.GRID_HEIGHT_PERCENT;
                     trapElement.style.top = `${trapTopPercent}%`;
                     
                     // Horizontal position (X-axis)
-                    // The "grids" are horizontal units. If 4 grids ahead is 100% (off-screen)
-                    // We need a reference for the "grid" width. Let's assume 1 grid unit = 15% width.
-                    // Car is at ~25% left. Traps start at ~100% (off-screen)
-                    // We map forwardSteps 4 -> 100% and 0 -> 25% (where car is)
-                    const gridWidth = 75; // The range between car and edge (100 - 25)
-                    const maxSteps = this.TRAP_SPAWN_RANGE; // 4
+                    // The car is fixed at 25% from the left.
+                    // Traps start at 4 steps (100% off-screen) and end at 0 steps (at 25% collision point)
+                    const gridMovementRange = 75; // 100% (right edge) - 25% (car position)
+                    const maxSteps = this.TRAP_SPAWN_RANGE; // 4 steps total distance
                     
-                    // Example: 
-                    // forwardSteps=4 (spawn) -> left = 100%
-                    // forwardSteps=0 (collision) -> left = 25%
-                    // forwardSteps=2 (middle) -> left = 62.5%
+                    // Linear mapping: 
+                    // 4 steps -> 100%
+                    // 0 steps -> 25%
+                    const leftPosition = 25 + (trap.forwardSteps / maxSteps) * gridMovementRange;
                     
-                    const leftPosition = 25 + (trap.forwardSteps / maxSteps) * gridWidth;
-                    
-                    // If the left position is less than the car's start position (25%), make it red (danger zone)
-                    if (leftPosition < 25) {
-                        trapElement.style.opacity = 0.5;
+                    // Styling near collision point
+                    if (trap.forwardSteps <= this.MOVE_FORWARD_STEPS) { // Danger zone (1 click away)
+                        trapElement.style.opacity = 1;
+                        trapElement.style.transform = 'scale(1.2)';
+                    } else {
+                        trapElement.style.opacity = 0.8;
+                        trapElement.style.transform = 'scale(1)';
                     }
                     
                     trapElement.style.left = `${leftPosition}%`;
@@ -1100,13 +1186,13 @@
         const reactionRankDisplay = document.getElementById('reaction-rank');
         
         function getReactionRank(time) {
-            if (timeoncl50) {
+            if (time < 120) {
                 return '🌌 Ultra Instinct 🚀';
-            } else if (time <= 50) {
+            } else if (time <= 160) {
                 return '🏎️ F1 Racer 🏆';
-            } else if (time <= 250) {
+            } else if (time <= 210) {
                 return '🥊 Fighter 💪';
-            } else if (time <= 300) {
+            } else if (time <= 270) {
                 return '🧍 Average';
             } else {
                 return '🐌 Very Slow 🐢';
