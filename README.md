@@ -1100,13 +1100,13 @@
         const reactionRankDisplay = document.getElementById('reaction-rank');
         
         function getReactionRank(time) {
-            if (time < 120) {
+            if (timeoncl50) {
                 return '🌌 Ultra Instinct 🚀';
-            } else if (time <= 160) {
+            } else if (time <= 50) {
                 return '🏎️ F1 Racer 🏆';
-            } else if (time <= 210) {
+            } else if (time <= 250) {
                 return '🥊 Fighter 💪';
-            } else if (time <= 270) {
+            } else if (time <= 300) {
                 return '🧍 Average';
             } else {
                 return '🐌 Very Slow 🐢';
