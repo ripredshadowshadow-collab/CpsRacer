@@ -1,0 +1,24 @@
+/* mobile-ui.css
+Load this after your main stylesheet. Tweak colors/spacing to match your theme.
+*/
+.mobile-only { display: none; }
+
+/* enable for small screens or touch-first devices */
+@media (max-width: 900px), (hover: none) {
+  .mobile-only { display: block; position: absolute; inset: 0; pointer-events: none; z-index: 9999; }
+  #mobile-hud { pointer-events: auto; display:flex; flex-direction:column; justify-content:space-between; height:100%; padding:12px; box-sizing:border-box; }
+  .hud-top { display:flex; justify-content:space-between; gap:8px; color:#fff; font-weight:600; text-shadow:0 1px 2px rgba(0,0,0,.7); }
+  .hud-item { background: rgba(0,0,0,0.36); padding:6px 10px; border-radius:8px; font-size:14px; min-width:64px; text-align:center; }
+  .touch-controls { display:flex; justify-content:space-between; align-items:flex-end; gap:12px; padding-bottom:8px; }
+  .tc-btn { width:72px; height:72px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.35)); color:#fff; border:none; font-size:24px; box-shadow:0 4px 10px rgba(0,0,0,0.35); -webkit-tap-highlight-color: transparent; }
+  .tc-btn:active, .tc-btn.active { background:rgba(255,255,255,0.12); transform:translateY(1px); }
+  .tc-middle { display:flex; flex-direction:column; gap:8px; align-items:center; }
+  /* compact mode for very small screens */
+  @media (max-width:420px) {
+    .tc-btn { width:60px; height:60px; font-size:20px; }
+    .hud-item { font-size:13px; padding:5px 8px; }
+  }
+
+  /* optional subtle hiding of HUD elements during active play (controlled by .playing) */
+  #mobile-hud.playing .hud-top { opacity: 0.88; transition: opacity .2s; }
+}
