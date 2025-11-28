@@ -549,47 +549,6 @@
                     </button>
                 </div>
                 
-                <!-- 2. Car Details View (Hidden by default) -->
-                <div id="car-details-view" class="view-transition hidden">
-                    <h2 id="details-car-name" class="text-3xl font-extrabold text-gray-900 text-center mb-2"></h2>
-                    <p id="details-car-subtitle" class="text-md text-red-600 font-semibold text-center mb-6"></p>
-
-                    <!-- Car Image -->
-                    <img id="details-car-image" src="" alt="Selected Car" class="w-full h-40 object-contain rounded-xl shadow-lg mb-6 border border-gray-200">
-
-                    <h3 class="text-xl font-bold text-gray-800 mb-3 border-b pb-1">Specifications</h3>
-                    <dl class="space-y-2 text-gray-700">
-                        <div class="flex justify-between">
-                            <dt class="font-medium">Engine:</dt>
-                            <dd id="details-engine" class="font-semibold"></dd>
-                        </div>
-                        <div class="flex justify-between">
-                            <dt class="font-medium">Horsepower:</dt>
-                            <dd id="details-hp" class="font-semibold"></dd>
-                        </div>
-                        <div class="flex justify-between">
-                            <dt class="font-medium">Torque:</dt>
-                            <dd id="details-torque" class="font-semibold"></dd>
-                        </div>
-                        <div class="flex justify-between">
-                            <dt class="font-medium">Drivetrain:</dt>
-                            <dd id="details-drivetrain" class="font-semibold"></dd>
-                        </div>
-                    </dl>
-
-                    <h3 class="text-xl font-bold text-gray-800 mt-6 mb-3 border-b pb-1">Special Notes</h3>
-                    <p id="details-special" class="text-gray-600 mb-6 italic"></p>
-
-                    <!-- Action Buttons -->
-                    <div class="space-y-3">
-                        <button onclick="startRace('random')" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors shadow-md">
-                            Start Race
-                        </button>
-                        <button onclick="showCarSelectView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
-                            ← Select a Different Car
-                        </button>
-                    </div>
-                </div>
 
                 <!-- 3. Map Selection View -->
                 <div id="map-selection-view" class="view-transition hidden">
@@ -606,8 +565,8 @@
                     </button>
 
                     <!-- Back Button -->
-                    <button onclick="showCarDetailsView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
-                        ← Back to Car Details
+                    <button onclick="showCarSelectView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        ← Back to Car Selection
                     </button>
                 </div>
                 
@@ -1341,11 +1300,7 @@
 
             // If navigating to practice, ensure we start on the selection view
             if (pageId === 'practice') {
-                if (!currentSelectedCarId || currentPage === 'menu') {
-                     showCarSelectView();
-                } else {
-                    showCarDetailsView(); 
-                }
+                showCarSelectView();
             }
 
             const pages = document.querySelectorAll('.page');
@@ -1389,15 +1344,13 @@
             currentPage = pageId;
         }
 
-        // --- Practice Mode Logic (Carousel + Details + Map Selection + Driving) ---
+        // --- Practice Mode Logic (Carousel + Map Selection + Driving) ---
         const carSelectView = document.getElementById('car-select-view');
-        const carDetailsView = document.getElementById('car-details-view');
         const mapSelectionView = document.getElementById('map-selection-view');
         const drivingView = document.getElementById('driving-view');
 
         /** Transitions to the Car Selection View */
         function showCarSelectView() {
-            carDetailsView.classList.add('hidden');
             mapSelectionView.classList.add('hidden'); 
             drivingView.classList.add('hidden'); // Hide driving view
             carSelectView.classList.remove('hidden');
@@ -1418,28 +1371,9 @@
             }
         }
 
-        /** Transitions to the Car Details View */
-        function showCarDetailsView() {
-            carSelectView.classList.add('hidden');
-            mapSelectionView.classList.add('hidden'); 
-            drivingView.classList.add('hidden'); // Hide driving view
-            carDetailsView.classList.remove('hidden');
-            // Show practice video and button, hide menu video
-            const practiceVideo = document.getElementById('practice-video');
-            const practiceBtn = document.getElementById('practice-sound-toggle');
-            const backgroundVideo = document.getElementById('background-video');
-            if (backgroundVideo) {
-                backgroundVideo.pause();
-                backgroundVideo.style.opacity = '0';
-            }
-            if (practiceVideo) practiceVideo.style.opacity = '1';
-            if (practiceBtn) practiceBtn.classList.add('visible');
-            if (practiceVideo) practiceVideo.play();
-        }
 
         /** Transitions to the Map Selection View (Random/Maps) */
         function showMapSelectionView() {
-            carDetailsView.classList.add('hidden');
             carSelectView.classList.add('hidden');
             drivingView.classList.add('hidden'); // Hide driving view
             mapSelectionView.classList.remove('hidden');
@@ -1448,7 +1382,6 @@
         
         /** Transitions to the Driving View (Game) */
         function showDrivingView() {
-            carDetailsView.classList.add('hidden');
             mapSelectionView.classList.add('hidden'); 
             carSelectView.classList.add('hidden');
             drivingView.classList.remove('hidden');
@@ -1465,15 +1398,14 @@
             CarGame.init(currentSelectedCarId); 
         }
         
-        /** End the game and return to car details view */
+        /** End the game and return to car select view */
         function endRacePractice() {
             CarGame.stop();
-            showCarDetailsView();
+            showCarSelectView();
         }
 
-
         /**
-         * Fills the details view with the selected car's data and transitions the view.
+         * Selects a car and starts the race directly (no details view).
          * @param {string} carKey - The key for the car in the carData object ('AE86', 'GTR', 'BRZ').
          */
         function selectCar(carKey) {
@@ -1483,19 +1415,8 @@
             // Store selected car ID
             currentSelectedCarId = carKey;
             
-            // Fill Data in the Details View
-            document.getElementById('details-car-name').textContent = data.name;
-            document.getElementById('details-car-subtitle').textContent = data.subtitle;
-            document.getElementById('details-car-image').src = data.image;
-            document.getElementById('details-car-image').alt = data.name;
-            document.getElementById('details-engine').textContent = data.engine;
-            document.getElementById('details-hp').textContent = data.hp;
-            document.getElementById('details-torque').textContent = data.torque;
-            document.getElementById('details-drivetrain').textContent = data.drivetrain;
-            document.getElementById('details-special').textContent = data.special;
-
-            // Transition to the details view
-            showCarDetailsView();
+            // Start race immediately without showing car details
+            showDrivingView();
         }
 
         /** Handles starting the race (now directs to the driving view for 'random') */
