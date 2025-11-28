@@ -446,12 +446,24 @@
                 <!-- Separator -->
                 <li class="border-t border-gray-200"></li>
 
-                <!-- Reaction Tester Option (Now the last item, so rounded-b-lg added) -->
+                <!-- Reaction Tester Option -->
                 <li>
                     <a href="javascript:void(0)" onclick="showPage('reaction-tester')"
-                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-600 hover:bg-yellow-50 rounded-b-lg transition-colors duration-200">
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-yellow-600 hover:bg-yellow-50 transition-colors duration-200">
                         <svg class="w-5 h-5 mr-3 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         Reaction Tester
+                    </a>
+                </li>
+                
+                <!-- Separator -->
+                <li class="border-t border-gray-200"></li>
+
+                <!-- Online Mode Option (NEW) -->
+                <li>
+                    <a href="javascript:void(0)" onclick="showPage('online-mode')"
+                       class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-green-600 rounded-b-lg hover:bg-green-700 transition-colors duration-200">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        Online Mode
                     </a>
                 </li>
             </ul>
@@ -748,6 +760,211 @@
                 <button onclick="showPage('menu')" class="mt-6 w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
                     ← Back to Menu
                 </button>
+            </div>
+
+            <!-- 3. Online Mode Page Content (NEW) -->
+            <div id="online-mode" class="page bg-white rounded-lg shadow-xl p-6">
+                
+                <!-- Username Entry View -->
+                <div id="online-username-view" class="view-transition">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-800 text-center">Online Mode</h2>
+                    <p class="text-gray-500 mb-6 text-center text-sm">Race against other players online!</p>
+                    
+                    <div class="mb-6">
+                        <label for="username-input" class="block text-sm font-medium text-gray-700 mb-2">Enter Your Username</label>
+                        <input type="text" id="username-input" maxlength="16" placeholder="Your username..."
+                               class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none text-lg"
+                               onkeypress="if(event.key==='Enter') OnlineGame.submitUsername()">
+                    </div>
+                    
+                    <button onclick="OnlineGame.submitUsername()" 
+                            class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors shadow-md mb-4">
+                        Continue
+                    </button>
+                    
+                    <button onclick="showPage('menu')" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        ← Back to Menu
+                    </button>
+                </div>
+
+                <!-- Host/Join Selection View -->
+                <div id="online-selection-view" class="view-transition hidden">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-800 text-center">Welcome, <span id="display-username" class="text-green-600"></span>!</h2>
+                    <p class="text-gray-500 mb-6 text-center text-sm">Choose how you want to race</p>
+                    
+                    <!-- Car Selection for Online -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Select Your Car</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="OnlineGame.selectCar('AE86')" id="online-car-AE86"
+                                    class="online-car-btn p-3 border-2 border-gray-300 rounded-lg hover:border-green-500 transition-all text-center">
+                                <div class="text-2xl mb-1">🚗</div>
+                                <div class="text-xs font-medium">AE86</div>
+                            </button>
+                            <button onclick="OnlineGame.selectCar('GTR')" id="online-car-GTR"
+                                    class="online-car-btn p-3 border-2 border-gray-300 rounded-lg hover:border-green-500 transition-all text-center">
+                                <div class="text-2xl mb-1">🏎️</div>
+                                <div class="text-xs font-medium">GT-R</div>
+                            </button>
+                            <button onclick="OnlineGame.selectCar('BRZ')" id="online-car-BRZ"
+                                    class="online-car-btn p-3 border-2 border-gray-300 rounded-lg hover:border-green-500 transition-all text-center">
+                                <div class="text-2xl mb-1">🚙</div>
+                                <div class="text-xs font-medium">BRZ</div>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button onclick="OnlineGame.hostRace()" 
+                            class="w-full bg-green-600 text-white font-bold py-4 px-4 rounded-lg hover:bg-green-700 transition-colors shadow-md mb-3 flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                        Host Race
+                    </button>
+                    
+                    <button onclick="OnlineGame.showJoinView()" 
+                            class="w-full bg-blue-600 text-white font-bold py-4 px-4 rounded-lg hover:bg-blue-700 transition-colors shadow-md mb-4 flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14"></path></svg>
+                        Join Race
+                    </button>
+                    
+                    <button onclick="OnlineGame.backToUsername()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        ← Change Username
+                    </button>
+                </div>
+
+                <!-- Join Race View -->
+                <div id="online-join-view" class="view-transition hidden">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-800 text-center">Join Race</h2>
+                    <p class="text-gray-500 mb-6 text-center text-sm">Enter the lobby code to join</p>
+                    
+                    <div class="mb-6">
+                        <label for="lobby-code-input" class="block text-sm font-medium text-gray-700 mb-2">Lobby Code</label>
+                        <input type="text" id="lobby-code-input" maxlength="6" placeholder="Enter 6-digit code..."
+                               class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-lg text-center uppercase tracking-widest font-mono"
+                               style="letter-spacing: 0.3em;"
+                               onkeypress="if(event.key==='Enter') OnlineGame.joinRace()">
+                    </div>
+                    
+                    <div id="join-error-message" class="hidden mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-center text-sm"></div>
+                    
+                    <button onclick="OnlineGame.joinRace()" 
+                            class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors shadow-md mb-4">
+                        Join Lobby
+                    </button>
+                    
+                    <button onclick="OnlineGame.showSelectionView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        ← Back
+                    </button>
+                </div>
+
+                <!-- Lobby View -->
+                <div id="online-lobby-view" class="view-transition hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-bold text-gray-800">Race Lobby</h2>
+                        <div class="flex items-center bg-green-100 px-3 py-1 rounded-lg">
+                            <span class="text-sm text-gray-600 mr-2">Code:</span>
+                            <span id="lobby-code-display" class="font-mono font-bold text-green-700 text-lg tracking-wider"></span>
+                            <button onclick="OnlineGame.copyLobbyCode()" class="ml-2 text-green-600 hover:text-green-800">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-medium text-gray-600">Players (<span id="player-count">0</span>/6)</span>
+                            <span id="host-badge" class="hidden bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded">You're Host</span>
+                        </div>
+                        <div id="player-list" class="bg-gray-50 rounded-lg p-3 min-h-[150px] max-h-[200px] overflow-y-auto">
+                            <!-- Players will be listed here -->
+                        </div>
+                    </div>
+                    
+                    <div id="host-controls" class="hidden mb-4">
+                        <button onclick="OnlineGame.startRace()" 
+                                class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors shadow-md flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Start Race
+                        </button>
+                    </div>
+                    
+                    <div id="waiting-message" class="mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg text-center text-sm">
+                        Waiting for host to start the race...
+                    </div>
+                    
+                    <button onclick="OnlineGame.leaveLobby()" class="w-full bg-red-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-600 transition-colors shadow-md">
+                        Leave Lobby
+                    </button>
+                </div>
+
+                <!-- Countdown View -->
+                <div id="online-countdown-view" class="view-transition hidden">
+                    <div class="text-center py-12">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Race Starting!</h2>
+                        <div id="countdown-number" class="text-9xl font-black text-green-600 animate-pulse">3</div>
+                        <p class="text-gray-500 mt-4">Get ready to race!</p>
+                    </div>
+                </div>
+
+                <!-- Online Racing View -->
+                <div id="online-racing-view" class="view-transition hidden">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="bg-green-100 px-3 py-1 rounded-lg">
+                            <span class="text-sm text-gray-600">Score: </span>
+                            <span id="online-score-display" class="font-bold text-green-700">0</span>
+                        </div>
+                        <div class="bg-blue-100 px-3 py-1 rounded-lg">
+                            <span class="text-sm text-gray-600">Time: </span>
+                            <span id="online-timer-display" class="font-bold text-blue-700">0s</span>
+                        </div>
+                        <div class="bg-gray-100 px-3 py-1 rounded-lg">
+                            <span class="text-sm text-gray-600">Alive: </span>
+                            <span id="online-alive-display" class="font-bold text-gray-700">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Other Players Status -->
+                    <div id="online-players-status" class="flex flex-wrap gap-1 mb-2">
+                        <!-- Player status indicators -->
+                    </div>
+                    
+                    <!-- Game Track (Reused from practice) -->
+                    <div id="online-game-track" class="relative w-full h-64 rounded-lg overflow-hidden mb-3" style="background-color: #1a1a1a; background-image: linear-gradient(to bottom, #444 2px, transparent 2px); background-size: 100% 20%; border-left: 10px solid #555; border-right: 10px solid #555;">
+                        <div id="online-trap-container"></div>
+                        <div id="online-game-car" class="absolute" style="left: 20%; transform: translate(-50%, -50%); width: 70px; height: 45px; z-index: 15;"></div>
+                        <div id="online-game-over-message" class="absolute inset-0 bg-red-600/90 text-white z-20 hidden flex-col items-center justify-center text-center">
+                            <h3 class="text-2xl font-bold mb-2">You Crashed!</h3>
+                            <p id="online-crash-stats" class="text-lg"></p>
+                            <p class="text-sm mt-2 opacity-80">Waiting for other players...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Controls for Online -->
+                    <div class="mobile-controls flex gap-4 justify-center">
+                        <button onmousedown="OnlineGame.moveUp()" ontouchstart="OnlineGame.moveUp(); event.preventDefault();" class="touch-btn touch-btn-up">W</button>
+                        <button onmousedown="OnlineGame.stepForward()" ontouchstart="OnlineGame.stepForward(); event.preventDefault();" class="touch-btn touch-btn-step">GO!</button>
+                        <button onmousedown="OnlineGame.moveDown()" ontouchstart="OnlineGame.moveDown(); event.preventDefault();" class="touch-btn touch-btn-down">S</button>
+                    </div>
+                    <p class="desktop-controls-hint text-center text-gray-500 text-xs mt-2">Use W/S keys to move, click track to step forward</p>
+                </div>
+
+                <!-- Leaderboard View -->
+                <div id="online-leaderboard-view" class="view-transition hidden">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Race Results</h2>
+                    
+                    <div id="leaderboard-container" class="mb-6">
+                        <!-- Leaderboard entries will be inserted here -->
+                    </div>
+                    
+                    <button onclick="OnlineGame.returnToLobby()" 
+                            class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors shadow-md mb-3">
+                        Back to Lobby
+                    </button>
+                    
+                    <button onclick="OnlineGame.leaveLobby()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
+                        Leave Race
+                    </button>
+                </div>
+
             </div>
 
         </div>
@@ -1999,6 +2216,660 @@
             };
             initMobileUI();
         })();
+
+        // --- Online Game Module (WebSocket Multiplayer) ---
+        const OnlineGame = {
+            // Connection State
+            ws: null,
+            playerId: null,
+            username: '',
+            carId: 'AE86',
+            lobbyCode: null,
+            isHost: false,
+            lobby: null,
+            
+            // Game State
+            GRID_ROWS: 5,
+            GRID_HEIGHT_PERCENT: 20,
+            currentLane: 2,
+            score: 0,
+            isGameOver: false,
+            gameStartTime: null,
+            elapsedTime: 0,
+            timerInterval: null,
+            traps: [],
+            trapSeed: null,
+            rng: null,
+            
+            // DOM Elements
+            elements: {},
+            
+            // Initialize WebSocket connection
+            connect() {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                const wsUrl = `${protocol}//${window.location.host}/ws`;
+                
+                this.ws = new WebSocket(wsUrl);
+                
+                this.ws.onopen = () => {
+                    console.log('WebSocket connected');
+                    if (this.username) {
+                        this.register();
+                    }
+                };
+                
+                this.ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    this.handleMessage(data);
+                };
+                
+                this.ws.onclose = () => {
+                    console.log('WebSocket disconnected');
+                    setTimeout(() => {
+                        if (this.username) {
+                            this.connect();
+                        }
+                    }, 3000);
+                };
+                
+                this.ws.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                };
+            },
+            
+            // Send message to server
+            send(message) {
+                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify(message));
+                }
+            },
+            
+            // Register player with server
+            register() {
+                this.send({
+                    type: 'register',
+                    username: this.username,
+                    player_id: this.playerId,
+                    car_id: this.carId
+                });
+            },
+            
+            // Handle incoming messages
+            handleMessage(data) {
+                switch (data.type) {
+                    case 'registered':
+                        this.playerId = data.player_id;
+                        break;
+                        
+                    case 'lobby_created':
+                        this.lobby = data.lobby;
+                        this.lobbyCode = data.lobby.code;
+                        this.isHost = true;
+                        this.showLobbyView();
+                        break;
+                        
+                    case 'lobby_joined':
+                        this.lobby = data.lobby;
+                        this.lobbyCode = data.lobby.code;
+                        this.isHost = this.lobby.host_id === this.playerId;
+                        this.showLobbyView();
+                        break;
+                        
+                    case 'player_joined':
+                    case 'player_left':
+                    case 'player_updated':
+                    case 'lobby_updated':
+                        this.lobby = data.lobby;
+                        this.updateLobbyDisplay();
+                        break;
+                        
+                    case 'error':
+                        this.showError(data.message);
+                        break;
+                        
+                    case 'lobby_left':
+                        this.lobby = null;
+                        this.lobbyCode = null;
+                        this.isHost = false;
+                        this.showSelectionView();
+                        break;
+                        
+                    case 'race_starting':
+                        this.trapSeed = data.trap_seed;
+                        this.startCountdown(data.countdown);
+                        break;
+                        
+                    case 'player_state_update':
+                        this.updateOtherPlayerState(data);
+                        break;
+                        
+                    case 'player_crashed':
+                        this.handlePlayerCrashed(data);
+                        break;
+                        
+                    case 'race_finished':
+                        this.showLeaderboard(data.leaderboard);
+                        break;
+                }
+            },
+            
+            // UI Navigation
+            submitUsername() {
+                const input = document.getElementById('username-input');
+                const username = input.value.trim();
+                
+                if (username.length < 1) {
+                    alert('Please enter a username');
+                    return;
+                }
+                
+                this.username = username;
+                document.getElementById('display-username').textContent = username;
+                
+                // Connect to WebSocket if not already connected
+                if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+                    this.connect();
+                } else {
+                    this.register();
+                }
+                
+                this.showSelectionView();
+            },
+            
+            backToUsername() {
+                this.hideAllViews();
+                document.getElementById('online-username-view').classList.remove('hidden');
+            },
+            
+            showSelectionView() {
+                this.hideAllViews();
+                document.getElementById('online-selection-view').classList.remove('hidden');
+                this.updateCarSelection();
+            },
+            
+            showJoinView() {
+                this.hideAllViews();
+                document.getElementById('online-join-view').classList.remove('hidden');
+                document.getElementById('join-error-message').classList.add('hidden');
+            },
+            
+            showLobbyView() {
+                this.hideAllViews();
+                document.getElementById('online-lobby-view').classList.remove('hidden');
+                this.updateLobbyDisplay();
+            },
+            
+            hideAllViews() {
+                const views = [
+                    'online-username-view',
+                    'online-selection-view',
+                    'online-join-view',
+                    'online-lobby-view',
+                    'online-countdown-view',
+                    'online-racing-view',
+                    'online-leaderboard-view'
+                ];
+                views.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('hidden');
+                });
+            },
+            
+            // Car Selection
+            selectCar(carId) {
+                this.carId = carId;
+                this.updateCarSelection();
+                
+                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    this.send({ type: 'update_car', car_id: carId });
+                }
+            },
+            
+            updateCarSelection() {
+                document.querySelectorAll('.online-car-btn').forEach(btn => {
+                    btn.classList.remove('border-green-500', 'bg-green-50');
+                    btn.classList.add('border-gray-300');
+                });
+                const selected = document.getElementById(`online-car-${this.carId}`);
+                if (selected) {
+                    selected.classList.remove('border-gray-300');
+                    selected.classList.add('border-green-500', 'bg-green-50');
+                }
+            },
+            
+            // Lobby Actions
+            hostRace() {
+                if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+                    this.connect();
+                    setTimeout(() => this.send({ type: 'create_lobby' }), 500);
+                } else {
+                    this.send({ type: 'create_lobby' });
+                }
+            },
+            
+            joinRace() {
+                const code = document.getElementById('lobby-code-input').value.trim().toUpperCase();
+                
+                if (code.length !== 6) {
+                    this.showError('Please enter a valid 6-character code');
+                    return;
+                }
+                
+                if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+                    this.connect();
+                    setTimeout(() => this.send({ type: 'join_lobby', code: code }), 500);
+                } else {
+                    this.send({ type: 'join_lobby', code: code });
+                }
+            },
+            
+            leaveLobby() {
+                this.send({ type: 'leave_lobby' });
+                this.lobby = null;
+                this.lobbyCode = null;
+                this.isHost = false;
+                this.showSelectionView();
+            },
+            
+            copyLobbyCode() {
+                if (this.lobbyCode) {
+                    navigator.clipboard.writeText(this.lobbyCode).then(() => {
+                        alert('Lobby code copied!');
+                    });
+                }
+            },
+            
+            startRace() {
+                if (!this.isHost) return;
+                this.send({ type: 'start_race' });
+            },
+            
+            returnToLobby() {
+                this.send({ type: 'return_to_lobby' });
+                this.showLobbyView();
+            },
+            
+            // Display Updates
+            updateLobbyDisplay() {
+                if (!this.lobby) return;
+                
+                document.getElementById('lobby-code-display').textContent = this.lobby.code;
+                document.getElementById('player-count').textContent = this.lobby.players.length;
+                
+                // Update host status
+                const hostBadge = document.getElementById('host-badge');
+                const hostControls = document.getElementById('host-controls');
+                const waitingMessage = document.getElementById('waiting-message');
+                
+                this.isHost = this.lobby.host_id === this.playerId;
+                
+                if (this.isHost) {
+                    hostBadge.classList.remove('hidden');
+                    hostControls.classList.remove('hidden');
+                    waitingMessage.classList.add('hidden');
+                } else {
+                    hostBadge.classList.add('hidden');
+                    hostControls.classList.add('hidden');
+                    waitingMessage.classList.remove('hidden');
+                }
+                
+                // Update player list
+                const playerList = document.getElementById('player-list');
+                playerList.innerHTML = this.lobby.players.map(p => {
+                    const isCurrentPlayer = p.player_id === this.playerId;
+                    const isHostPlayer = p.player_id === this.lobby.host_id;
+                    return `
+                        <div class="flex items-center justify-between p-2 ${isCurrentPlayer ? 'bg-green-100' : 'bg-white'} rounded-lg mb-2">
+                            <div class="flex items-center">
+                                <span class="text-lg mr-2">${this.getCarEmoji(p.car_id)}</span>
+                                <span class="font-medium ${isCurrentPlayer ? 'text-green-700' : 'text-gray-700'}">${p.username}</span>
+                                ${isCurrentPlayer ? '<span class="ml-2 text-xs text-green-600">(You)</span>' : ''}
+                            </div>
+                            ${isHostPlayer ? '<span class="text-xs bg-yellow-200 text-yellow-800 px-2 py-1 rounded">Host</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
+            },
+            
+            getCarEmoji(carId) {
+                const emojis = { 'AE86': '🚗', 'GTR': '🏎️', 'BRZ': '🚙' };
+                return emojis[carId] || '🚗';
+            },
+            
+            showError(message) {
+                const errorEl = document.getElementById('join-error-message');
+                if (errorEl) {
+                    errorEl.textContent = message;
+                    errorEl.classList.remove('hidden');
+                } else {
+                    alert(message);
+                }
+            },
+            
+            // Countdown & Race Start
+            startCountdown(seconds) {
+                this.hideAllViews();
+                document.getElementById('online-countdown-view').classList.remove('hidden');
+                
+                const countdownEl = document.getElementById('countdown-number');
+                let count = seconds;
+                
+                const countdownInterval = setInterval(() => {
+                    countdownEl.textContent = count;
+                    count--;
+                    
+                    if (count < 0) {
+                        clearInterval(countdownInterval);
+                        this.initRace();
+                    }
+                }, 1000);
+            },
+            
+            // Seeded Random Number Generator
+            seededRandom() {
+                if (!this.rng) {
+                    this.rng = this.trapSeed || 12345;
+                }
+                this.rng = (this.rng * 1103515245 + 12345) & 0x7fffffff;
+                return this.rng / 0x7fffffff;
+            },
+            
+            // Initialize Race
+            initRace() {
+                this.hideAllViews();
+                document.getElementById('online-racing-view').classList.remove('hidden');
+                
+                // Reset game state
+                this.currentLane = 2;
+                this.score = 0;
+                this.isGameOver = false;
+                this.elapsedTime = 0;
+                this.traps = [];
+                this.rng = this.trapSeed;
+                
+                // Get DOM elements
+                this.elements = {
+                    car: document.getElementById('online-game-car'),
+                    track: document.getElementById('online-game-track'),
+                    trapContainer: document.getElementById('online-trap-container'),
+                    scoreDisplay: document.getElementById('online-score-display'),
+                    timerDisplay: document.getElementById('online-timer-display'),
+                    aliveDisplay: document.getElementById('online-alive-display'),
+                    playersStatus: document.getElementById('online-players-status'),
+                    gameOverMessage: document.getElementById('online-game-over-message'),
+                    crashStats: document.getElementById('online-crash-stats')
+                };
+                
+                // Set car SVG
+                if (carData[this.carId] && carData[this.carId].svg) {
+                    this.elements.car.innerHTML = carData[this.carId].svg;
+                }
+                
+                // Setup event listeners
+                this.boundHandleKey = this.handleKey.bind(this);
+                this.boundHandleClick = this.handleClick.bind(this);
+                document.addEventListener('keydown', this.boundHandleKey);
+                this.elements.track.addEventListener('mousedown', this.boundHandleClick);
+                this.elements.track.addEventListener('touchstart', this.boundHandleClick);
+                
+                // Start timer
+                this.gameStartTime = Date.now();
+                this.timerInterval = setInterval(() => {
+                    if (!this.isGameOver) {
+                        this.elapsedTime = Math.floor((Date.now() - this.gameStartTime) / 1000);
+                        this.elements.timerDisplay.textContent = this.elapsedTime + 's';
+                    }
+                }, 100);
+                
+                // Initialize display
+                this.elements.gameOverMessage.style.display = 'none';
+                this.updateDisplay();
+                this.updatePlayersStatus();
+                this.render();
+                
+                // Spawn initial traps
+                this.spawnTraps(4);
+                
+                // Notify server race started
+                this.send({ type: 'race_started' });
+            },
+            
+            // Handle keyboard input
+            handleKey(e) {
+                if (this.isGameOver) return;
+                const key = e.key.toLowerCase();
+                
+                if (key === 'w') {
+                    e.preventDefault();
+                    this.changeLaneAndStep(-1);
+                } else if (key === 's') {
+                    e.preventDefault();
+                    this.changeLaneAndStep(1);
+                }
+            },
+            
+            handleClick(e) {
+                if (this.isGameOver) return;
+                if (e.target.id === 'online-game-track' || e.target.id === 'online-trap-container') {
+                    e.preventDefault();
+                    this.changeLaneAndStep(0);
+                }
+            },
+            
+            moveUp() {
+                if (!this.isGameOver) this.changeLaneAndStep(-1);
+            },
+            
+            moveDown() {
+                if (!this.isGameOver) this.changeLaneAndStep(1);
+            },
+            
+            stepForward() {
+                if (!this.isGameOver) this.changeLaneAndStep(0);
+            },
+            
+            changeLaneAndStep(direction) {
+                if (this.isGameOver) return;
+                
+                // Change lane
+                if (direction !== 0) {
+                    const newLane = this.currentLane + direction;
+                    if (newLane >= 0 && newLane < this.GRID_ROWS) {
+                        this.currentLane = newLane;
+                    }
+                }
+                
+                // Check collision before moving
+                const collisionTrap = this.traps.find(trap => 
+                    trap.forwardSteps === 0 && trap.lane === this.currentLane
+                );
+                
+                if (collisionTrap) {
+                    this.gameOver();
+                    return;
+                }
+                
+                // Move traps
+                this.traps = this.traps.map(trap => ({
+                    ...trap,
+                    forwardSteps: trap.forwardSteps - 1
+                })).filter(trap => trap.forwardSteps >= -1);
+                
+                // Update score
+                this.score++;
+                this.updateDisplay();
+                
+                // Spawn new traps every 10 points
+                if (this.score % 10 === 0 && this.score > 0) {
+                    this.spawnTraps(4);
+                }
+                
+                // Render
+                this.render();
+                
+                // Send state update to server
+                this.send({
+                    type: 'player_state',
+                    lane: this.currentLane,
+                    grids: this.score,
+                    time_ms: Date.now() - this.gameStartTime
+                });
+            },
+            
+            spawnTraps(distance) {
+                const existingTrapAtSpawn = this.traps.find(trap => trap.forwardSteps === distance);
+                if (existingTrapAtSpawn) return;
+                
+                const allLanes = [0, 1, 2, 3, 4];
+                let safeLanes = [];
+                
+                const numSafeLanes = this.seededRandom() < 0.5 ? 1 : 2;
+                
+                if (numSafeLanes === 1) {
+                    const safeLane = Math.floor(this.seededRandom() * this.GRID_ROWS);
+                    safeLanes.push(safeLane);
+                } else {
+                    const startingLane = Math.floor(this.seededRandom() * (this.GRID_ROWS - 1));
+                    safeLanes.push(startingLane);
+                    safeLanes.push(startingLane + 1);
+                }
+                
+                const trapLanes = allLanes.filter(lane => !safeLanes.includes(lane));
+                
+                trapLanes.forEach(lane => {
+                    this.traps.push({ lane, forwardSteps: distance });
+                });
+            },
+            
+            render() {
+                // Render car position
+                const topPercent = this.currentLane * this.GRID_HEIGHT_PERCENT + (this.GRID_HEIGHT_PERCENT / 2);
+                this.elements.car.style.top = `${topPercent}%`;
+                
+                // Render traps
+                this.elements.trapContainer.innerHTML = '';
+                this.traps.forEach(trap => {
+                    const trapElement = document.createElement('div');
+                    trapElement.className = 'trap';
+                    trapElement.style.position = 'absolute';
+                    trapElement.style.width = '20%';
+                    trapElement.style.height = '20%';
+                    trapElement.style.display = 'flex';
+                    trapElement.style.alignItems = 'center';
+                    trapElement.style.justifyContent = 'center';
+                    trapElement.style.fontSize = '2rem';
+                    trapElement.style.pointerEvents = 'none';
+                    trapElement.style.zIndex = '10';
+                    
+                    const trapTopPercent = trap.lane * this.GRID_HEIGHT_PERCENT;
+                    trapElement.style.top = `${trapTopPercent}%`;
+                    
+                    const gridMovementRange = 75;
+                    const leftPercent = 20 + (trap.forwardSteps * (gridMovementRange / 4));
+                    trapElement.style.left = `${leftPercent}%`;
+                    
+                    if (leftPercent > 100) {
+                        trapElement.style.opacity = '0';
+                    }
+                    
+                    trapElement.textContent = '🚧';
+                    this.elements.trapContainer.appendChild(trapElement);
+                });
+            },
+            
+            updateDisplay() {
+                this.elements.scoreDisplay.textContent = this.score;
+            },
+            
+            updatePlayersStatus() {
+                if (!this.lobby) return;
+                
+                const alivePlayers = this.lobby.players.filter(p => !p.is_crashed);
+                this.elements.aliveDisplay.textContent = alivePlayers.length;
+                
+                this.elements.playersStatus.innerHTML = this.lobby.players.map(p => {
+                    const isMe = p.player_id === this.playerId;
+                    const statusColor = p.is_crashed ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800';
+                    return `<span class="text-xs px-2 py-1 rounded ${statusColor} ${isMe ? 'font-bold' : ''}">${p.username}${isMe ? ' (You)' : ''}: ${p.grids_survived}</span>`;
+                }).join('');
+            },
+            
+            updateOtherPlayerState(data) {
+                if (!this.lobby) return;
+                
+                const player = this.lobby.players.find(p => p.player_id === data.player_id);
+                if (player) {
+                    player.current_lane = data.lane;
+                    player.grids_survived = data.grids;
+                    player.survival_time_ms = data.time_ms;
+                    this.updatePlayersStatus();
+                }
+            },
+            
+            handlePlayerCrashed(data) {
+                if (!this.lobby) return;
+                
+                const player = this.lobby.players.find(p => p.player_id === data.player_id);
+                if (player) {
+                    player.is_crashed = true;
+                    player.grids_survived = data.grids;
+                    player.survival_time_ms = data.time_ms;
+                    this.updatePlayersStatus();
+                }
+            },
+            
+            gameOver() {
+                this.isGameOver = true;
+                
+                // Stop timer
+                if (this.timerInterval) {
+                    clearInterval(this.timerInterval);
+                }
+                
+                // Remove event listeners
+                document.removeEventListener('keydown', this.boundHandleKey);
+                this.elements.track.removeEventListener('mousedown', this.boundHandleClick);
+                this.elements.track.removeEventListener('touchstart', this.boundHandleClick);
+                
+                // Show game over
+                this.elements.gameOverMessage.style.display = 'flex';
+                this.elements.crashStats.textContent = `${this.score} Grids in ${this.elapsedTime}s`;
+                
+                // Notify server
+                this.send({
+                    type: 'player_crashed',
+                    grids: this.score,
+                    time_ms: Date.now() - this.gameStartTime
+                });
+            },
+            
+            showLeaderboard(leaderboard) {
+                this.hideAllViews();
+                document.getElementById('online-leaderboard-view').classList.remove('hidden');
+                
+                const container = document.getElementById('leaderboard-container');
+                container.innerHTML = leaderboard.map((entry, index) => {
+                    const isMe = entry.username === this.username;
+                    const medalColors = ['bg-yellow-400', 'bg-gray-300', 'bg-amber-600'];
+                    const medalBg = index < 3 ? medalColors[index] : 'bg-gray-200';
+                    
+                    return `
+                        <div class="flex items-center justify-between p-3 ${isMe ? 'bg-green-100 border-2 border-green-400' : 'bg-gray-50'} rounded-lg mb-2">
+                            <div class="flex items-center">
+                                <span class="w-8 h-8 flex items-center justify-center ${medalBg} rounded-full font-bold text-white mr-3">${entry.rank}</span>
+                                <span class="text-lg mr-2">${this.getCarEmoji(entry.car_id)}</span>
+                                <span class="font-medium ${isMe ? 'text-green-700' : 'text-gray-700'}">${entry.username}</span>
+                                ${isMe ? '<span class="ml-2 text-xs text-green-600">(You)</span>' : ''}
+                            </div>
+                            <div class="text-right">
+                                <div class="font-bold text-gray-800">${entry.grids_survived} grids</div>
+                                <div class="text-xs text-gray-500">${Math.floor(entry.survival_time_ms / 1000)}s</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        };
 
         window.onload = function() {
             // Initialize the view to show the menu
