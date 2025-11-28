@@ -92,6 +92,12 @@ This project is now configured for GitHub with:
 4. **Add video files** to GitHub Releases (optional, for download)
 
 ## Recent Changes (Nov 28, 2025)
+- Enhanced car visuals with more realistic SVG designs:
+  - **AE86**: Added door lines, mirrors, multi-layered wheels with rims, windshields, headlights, taillights, body highlight, and depth shadows
+  - **GT-R**: Added iconic gold stripe, hood vents/scoops, aggressive double headlights, sport rims with star pattern, metallic shine effect, and realistic body proportions
+  - **BRZ**: Added lower body accent, smooth roof curve, angled windshield for sporty look, lightweight wheel design, and body highlight for depth
+
+## Previous Session Changes (Nov 28, 2025)
 - Imported from GitHub and set up for Replit environment
 - Renamed README.md to index.html
 - Organized CSS and JS files into proper directories
