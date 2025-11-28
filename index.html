@@ -631,12 +631,18 @@
                         </button>
                     </div>
                     
-                    <!-- Score Display -->
+                    <!-- Score and Timer Display -->
                     <div class="p-4 bg-red-100 rounded-xl shadow-lg flex justify-between items-center border-b-4 border-red-400">
                         <div>
                             <p class="text-sm font-medium text-gray-500">Grids Safely Passed</p>
                         </div>
                         <p id="current-score-display" class="text-5xl font-extrabold text-red-700">0</p>
+                    </div>
+                    
+                    <!-- Timer Display -->
+                    <div class="mt-3 p-3 bg-blue-100 rounded-lg shadow-md flex justify-center items-center border-2 border-blue-300">
+                        <p class="text-sm font-medium text-gray-600 mr-3">⏱️ Time Elapsed:</p>
+                        <p id="game-timer-display" class="text-3xl font-extrabold text-blue-600">0s</p>
                     </div>
 
                     <!-- Back Button -->
@@ -1245,6 +1251,10 @@
             score: 0,
             traps: [],      // [{lane: 0-4, forwardSteps: 4}]
             isGameOver: true,
+            gameStartTime: null,
+            elapsedTime: 0,
+            timerInterval: null,
+            timerDisplay: null,
             
             init(carId) {
                 this.car = document.getElementById('game-car');
@@ -1253,8 +1263,9 @@
                 this.scoreDisplay = document.getElementById('current-score-display');
                 this.gameOverMessage = document.getElementById('game-over-message');
                 this.finalScoreDisplay = document.getElementById('final-game-score');
+                this.timerDisplay = document.getElementById('game-timer-display');
                 
-                if (!this.car || !this.track || !this.trapContainer || !this.scoreDisplay || !this.gameOverMessage) {
+                if (!this.car || !this.track || !this.trapContainer || !this.scoreDisplay || !this.gameOverMessage || !this.timerDisplay) {
                     console.error("Game elements not found.");
                     return;
                 }
@@ -1284,6 +1295,8 @@
                 document.removeEventListener('keydown', this.boundHandleKey);
                 this.track.removeEventListener('mousedown', this.boundHandleClick);
                 this.track.removeEventListener('touchstart', this.boundHandleClick);
+                // Stop timer
+                if (this.timerInterval) clearInterval(this.timerInterval);
             },
 
             reset() {
@@ -1291,8 +1304,19 @@
                 this.currentLane = 2; // Middle lane
                 this.score = 0;
                 this.traps = [];
+                this.elapsedTime = 0;
+                
+                // Stop previous timer if exists
+                if (this.timerInterval) clearInterval(this.timerInterval);
                 
                 this.gameOverMessage.style.display = 'none';
+                
+                // Start timer
+                this.gameStartTime = Date.now();
+                this.timerInterval = setInterval(() => {
+                    this.elapsedTime = Math.floor((Date.now() - this.gameStartTime) / 1000);
+                    this.updateTimer();
+                }, 100);
                 
                 // Initial render
                 this.render();
@@ -1460,10 +1484,17 @@
             updateDisplay() {
                 this.scoreDisplay.textContent = this.score;
             },
+            
+            updateTimer() {
+                if (this.timerDisplay) {
+                    this.timerDisplay.textContent = this.elapsedTime + 's';
+                }
+            },
 
             gameOver() {
                 this.isGameOver = true;
-                this.finalScoreDisplay.textContent = this.score;
+                if (this.timerInterval) clearInterval(this.timerInterval);
+                this.finalScoreDisplay.textContent = `${this.score} Grids in ${this.elapsedTime}s`;
                 this.gameOverMessage.style.display = 'flex';
             }
         };

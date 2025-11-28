@@ -92,6 +92,10 @@ This project is now configured for GitHub with:
 4. **Add video files** to GitHub Releases (optional, for download)
 
 ## Recent Changes (Nov 28, 2025)
+- Added in-game timer showing elapsed seconds during gameplay
+  - Timer starts when game begins
+  - Displays real-time counter in blue box below score
+  - Shows total time on game over screen: "X Grids in Ys"
 - Simplified car designs to side-view perspective (2 visible wheels):
   - Removed top wheels for cleaner side-profile appearance
   - Kept front and rear wheels only showing realistic side view
