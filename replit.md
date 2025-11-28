@@ -92,10 +92,11 @@ This project is now configured for GitHub with:
 4. **Add video files** to GitHub Releases (optional, for download)
 
 ## Recent Changes (Nov 28, 2025)
-- Enhanced car visuals with more realistic SVG designs:
-  - **AE86**: Added door lines, mirrors, multi-layered wheels with rims, windshields, headlights, taillights, body highlight, and depth shadows
-  - **GT-R**: Added iconic gold stripe, hood vents/scoops, aggressive double headlights, sport rims with star pattern, metallic shine effect, and realistic body proportions
-  - **BRZ**: Added lower body accent, smooth roof curve, angled windshield for sporty look, lightweight wheel design, and body highlight for depth
+- Significantly enhanced car realism with gradient shading and detailed features:
+  - **AE86**: Gradient body shading, curved windshields, pop-up style headlights, detailed rims with spokes, brake lights, hood vents
+  - **GT-R**: Body gradient, aggressive hood scoops, angled windshields, iconic gold stripe, triple headlight design, LED-style taillights, star-pattern sport rims, rear wing
+  - **BRZ**: Smooth body curves with gradient, lower accent stripe, rounded LED headlights, clean square taillights, mesh-pattern lightweight wheels
+- Trap difficulty restored to original (every 10 points, 1-2 safe lanes)
 
 ## Previous Session Changes (Nov 28, 2025)
 - Imported from GitHub and set up for Replit environment
