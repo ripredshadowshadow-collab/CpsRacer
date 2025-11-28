@@ -1,0 +1,23 @@
+<!--
+mobile-ui-overlay.html
+Place this markup inside your main index.html near the game container (e.g. directly inside <body> or inside the game's parent div).
+This overlay is only shown on touch/small screens and ONLY when the game mode is 'grid' or 'practice'.
+-->
+<div id="mobile-hud" class="mobile-only" aria-hidden="true" role="region" aria-label="Mobile game controls">
+  <div class="hud-top" role="status" aria-live="polite">
+    <div class="hud-item" id="hud-score">Score: <span id="hud-score-val">0</span></div>
+    <div class="hud-item" id="hud-lap">Lap <span id="hud-lap-val">1</span></div>
+    <div class="hud-item" id="hud-pos">1st</div>
+  </div>
+
+  <div class="touch-controls" aria-hidden="false" role="group" aria-label="Touch controls">
+    <button id="btn-left" class="tc-btn left" aria-label="Move left">◀</button>
+
+    <div class="tc-middle">
+      <button id="btn-boost" class="tc-btn boost" aria-label="Boost">⚡</button>
+      <button id="btn-jump" class="tc-btn jump" aria-label="Jump">▲</button>
+    </div>
+
+    <button id="btn-right" class="tc-btn right" aria-label="Move right">▶</button>
+  </div>
+</div>
