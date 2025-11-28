@@ -427,7 +427,7 @@
                     <a href="javascript:void(0)" onclick="showPage('practice')"
                        class="flex items-center justify-center w-full px-6 py-4 text-lg font-medium text-white bg-red-600 rounded-t-lg hover:bg-red-700 transition-colors duration-200">
                         <span class="text-xl mr-3" role="img" aria-label="Race Flag">🏁</span>
-                        Practice (Grid Game)
+                        Practice
                     </a>
                 </li>
                 
@@ -583,7 +583,7 @@
                     <!-- Action Buttons -->
                     <div class="space-y-3">
                         <button onclick="startRace('random')" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors shadow-md">
-                            Start Grid Race
+                            Start Race
                         </button>
                         <button onclick="showCarSelectView()" class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-colors shadow-md">
                             ← Select a Different Car
@@ -597,7 +597,7 @@
                     
                     <!-- Random Map Option (Now starts the game) -->
                     <button onclick="startRace('random')" class="w-full mb-4 p-4 bg-green-600 text-white font-bold text-xl rounded-lg hover:bg-green-700 transition-colors shadow-lg flex items-center justify-center">
-                        <span class="mr-3 text-2xl" role="img" aria-label="Dice">🎲</span> Start Grid Game
+                        <span class="mr-3 text-2xl" role="img" aria-label="Dice">🎲</span> Start Practice
                     </button>
 
                     <!-- Maps Option (Placeholder) -->
@@ -2035,7 +2035,7 @@
         const reactionRankDisplay = document.getElementById('reaction-rank');
         
         function getReactionRank(time) {
-            if (time <= 100) {
+            if (time < 100) {
                 return '🏎️ F1 Racer 🏆';
             } else if (time <= 150) {
                 return '🌌 Ultra Instinct 🚀';
