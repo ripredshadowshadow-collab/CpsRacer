@@ -92,10 +92,12 @@ This project is now configured for GitHub with:
 4. **Add video files** to GitHub Releases (optional, for download)
 
 ## Recent Changes (Nov 28, 2025)
-- Added in-game timer showing elapsed seconds during gameplay
-  - Timer starts when game begins
+- Improved in-game timer with smart start/stop:
+  - Timer starts only when the car first moves
   - Displays real-time counter in blue box below score
-  - Shows total time on game over screen: "X Grids in Ys"
+  - Shows "0s" before any movement
+  - Stops immediately when car crashes
+  - Game over screen displays: "X Grids in Ys" (e.g., "5 Grids in 8s")
 - Simplified car designs to side-view perspective (2 visible wheels):
   - Removed top wheels for cleaner side-profile appearance
   - Kept front and rear wheels only showing realistic side view

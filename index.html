@@ -1255,6 +1255,7 @@
             elapsedTime: 0,
             timerInterval: null,
             timerDisplay: null,
+            gameTimerStarted: false,
             
             init(carId) {
                 this.car = document.getElementById('game-car');
@@ -1305,18 +1306,13 @@
                 this.score = 0;
                 this.traps = [];
                 this.elapsedTime = 0;
+                this.gameTimerStarted = false;
                 
                 // Stop previous timer if exists
                 if (this.timerInterval) clearInterval(this.timerInterval);
                 
                 this.gameOverMessage.style.display = 'none';
-                
-                // Start timer
-                this.gameStartTime = Date.now();
-                this.timerInterval = setInterval(() => {
-                    this.elapsedTime = Math.floor((Date.now() - this.gameStartTime) / 1000);
-                    this.updateTimer();
-                }, 100);
+                this.timerDisplay.textContent = '0s';
                 
                 // Initial render
                 this.render();
@@ -1357,6 +1353,16 @@
             
             changeLaneAndStep(direction) {
                 if (this.isGameOver) return;
+                
+                // Start timer on first move
+                if (!this.gameTimerStarted) {
+                    this.gameTimerStarted = true;
+                    this.gameStartTime = Date.now();
+                    this.timerInterval = setInterval(() => {
+                        this.elapsedTime = Math.floor((Date.now() - this.gameStartTime) / 1000);
+                        this.updateTimer();
+                    }, 100);
+                }
                 
                 // 1. Calculate new lane (if direction is not 0)
                 if (direction !== 0) {
@@ -1494,7 +1500,9 @@
             gameOver() {
                 this.isGameOver = true;
                 if (this.timerInterval) clearInterval(this.timerInterval);
-                this.finalScoreDisplay.textContent = `${this.score} Grids in ${this.elapsedTime}s`;
+                const gridsText = this.score === 1 ? 'Grid' : 'Grids';
+                const secondsText = this.elapsedTime === 1 ? 'second' : 'seconds';
+                this.finalScoreDisplay.textContent = `${this.score} ${gridsText} in ${this.elapsedTime}${secondsText === 'second' ? 's' : 's'}`;
                 this.gameOverMessage.style.display = 'flex';
             }
         };
