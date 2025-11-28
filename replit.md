@@ -66,7 +66,6 @@ Desktop users can use:
 - **Click/Touch on track**: Step forward
 
 ## Notes
-- Missing video file `VID-20251127-WA0002.mp4` - app uses dark background fallback
 - Tailwind CSS loaded from CDN (suitable for this static app)
 - No build step required - all assets are inline or loaded from CDN
 
@@ -78,3 +77,5 @@ Desktop users can use:
 - Configured workflow and deployment settings
 - Added .gitignore for Python and Replit files
 - Added mobile touch controls for Grid Game (W, S, GO! buttons)
+- Added video background (background-video.mp4) with sound toggle button
+- Sound toggle button in top-right corner allows users to mute/unmute background video audio
