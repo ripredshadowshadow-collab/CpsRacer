@@ -50,6 +50,21 @@ Configured for Replit Autoscale deployment:
 - Score tracking and performance metrics
 - Car selection system with vehicle specifications
 
+## Mobile Controls (Grid Game)
+The Grid Game features dedicated mobile touch controls that appear on mobile devices:
+- **W Button (Blue)**: Move up one lane + step forward
+- **GO! Button (Green)**: Step forward without changing lane
+- **S Button (Red)**: Move down one lane + step forward
+
+These controls are automatically shown on:
+- Screens smaller than 768px
+- Devices with touch capability (no hover support)
+
+Desktop users can use:
+- **W key**: Move up + step forward
+- **S key**: Move down + step forward
+- **Click/Touch on track**: Step forward
+
 ## Notes
 - Missing video file `VID-20251127-WA0002.mp4` - app uses dark background fallback
 - Tailwind CSS loaded from CDN (suitable for this static app)
@@ -62,3 +77,4 @@ Configured for Replit Autoscale deployment:
 - Created Python HTTP server with cache-control headers
 - Configured workflow and deployment settings
 - Added .gitignore for Python and Replit files
+- Added mobile touch controls for Grid Game (W, S, GO! buttons)
