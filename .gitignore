@@ -27,6 +27,7 @@ wheels/
 .config/
 .upm/
 venv/
+.pythonlibs/
 
 # Large video files (add these to GitHub Releases instead)
 *.mp4

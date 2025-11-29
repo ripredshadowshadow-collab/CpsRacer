@@ -28,6 +28,8 @@ The project uses FastAPI with WebSocket support:
 - WebSocket endpoint at `/ws` for real-time multiplayer communication
 - Cache-Control headers prevent caching issues during development
 - Auto-restart enabled via workflow
+- Dependencies managed via `uv` and `pyproject.toml`
+- Python 3.11 with FastAPI, Uvicorn, and WebSockets installed
 
 ## Running Locally
 ```bash
@@ -37,9 +39,10 @@ The application will be available at `http://0.0.0.0:5000/`
 
 ## Deployment
 Configured for Replit Autoscale deployment:
-- Deployment Target: Autoscale (for simple stateless web apps)
+- Deployment Target: Autoscale (for stateless web apps with WebSocket support)
 - Run Command: `python3 server.py`
 - Port: 5000
+- Ready to publish: Click the "Publish" button in Replit to deploy
 
 ## Features
 - Fully responsive mobile and desktop design
@@ -124,7 +127,16 @@ This project is now configured for GitHub with:
    ```
 4. **Add video files** to GitHub Releases (optional, for download)
 
-## Recent Changes (Nov 28, 2025)
+## Recent Changes (Nov 29, 2025)
+- **Replit Environment Setup Complete**
+  - Installed Python dependencies via uv (FastAPI, Uvicorn, WebSockets)
+  - Configured workflow to run FastAPI server on port 5000
+  - Set up deployment configuration for Autoscale
+  - Updated .gitignore to exclude Python virtual environment
+  - Verified all features working (Practice, CPS Tester, Reaction Tester, Online Mode)
+  - Server successfully serving static files and WebSocket connections
+
+## Previous Changes (Nov 28, 2025)
 - **NEW: Online Multiplayer Mode**
   - Added Online Mode button to main menu
   - Username entry system for online players
