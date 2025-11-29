@@ -413,6 +413,11 @@
         </svg>
     </button>
 
+    <!-- Car Movement Sound Effect -->
+    <audio id="car-move-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiYAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQIAAAAAAA==" type="audio/wav">
+    </audio>
+
     <!-- Main Menu Content Container -->
     <div class="w-full max-w-sm mx-auto p-4 main-menu-container rounded-xl shadow-2xl">
         
@@ -1604,6 +1609,9 @@
                     }, 100);
                 }
                 
+                // Play car movement sound
+                this.playMoveSound();
+                
                 // 1. Calculate new lane (if direction is not 0)
                 if (direction !== 0) {
                     const newLane = this.currentLane + direction;
@@ -1617,6 +1625,16 @@
                 
                 // 3. Render immediately
                 this.render();
+            },
+            
+            playMoveSound() {
+                try {
+                    const sound = document.getElementById('car-move-sound');
+                    if (sound && !document.getElementById('sound-toggle').classList.contains('muted')) {
+                        sound.currentTime = 0;
+                        sound.play().catch(() => {});
+                    }
+                } catch (e) {}
             },
 
             stepForward() {
@@ -2675,8 +2693,18 @@
                 if (!this.isGameOver) this.changeLaneAndStep(0);
             },
             
+            lastMovementTime: 0,
+            
             changeLaneAndStep(direction) {
                 if (this.isGameOver) return;
+                
+                // Debounce: prevent multiple movements in quick succession (fix for double movement)
+                const now = Date.now();
+                if (now - this.lastMovementTime < 50) return;
+                this.lastMovementTime = now;
+                
+                // Play car movement sound
+                this.playMoveSound();
                 
                 // Change lane
                 if (direction !== 0) {
@@ -2721,6 +2749,16 @@
                     grids: this.score,
                     time_ms: Date.now() - this.gameStartTime
                 });
+            },
+            
+            playMoveSound() {
+                try {
+                    const sound = document.getElementById('car-move-sound');
+                    if (sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(() => {});
+                    }
+                } catch (e) {}
             },
             
             spawnTraps(distance) {
