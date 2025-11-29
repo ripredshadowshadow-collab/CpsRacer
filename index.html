@@ -1628,70 +1628,99 @@
                     
                     const audioContext = window.audioContext || (window.audioContext = new (window.AudioContext || window.webkitAudioContext)());
                     const now = audioContext.currentTime;
-                    const duration = 0.12;
+                    const duration = 0.15;
                     
-                    // Main engine oscillator
-                    const osc1 = audioContext.createOscillator();
-                    const osc1Gain = audioContext.createGain();
-                    osc1.connect(osc1Gain);
-                    osc1Gain.connect(audioContext.destination);
-                    osc1.type = 'sine';
+                    // V8 Engine characteristics - deep rumble with firing pulses
                     
-                    // Second harmonic for richness
-                    const osc2 = audioContext.createOscillator();
-                    const osc2Gain = audioContext.createGain();
-                    osc2.connect(osc2Gain);
-                    osc2Gain.connect(audioContext.destination);
-                    osc2.type = 'sine';
+                    // Low frequency rumble (engine block)
+                    const bassOsc = audioContext.createOscillator();
+                    const bassGain = audioContext.createGain();
+                    bassOsc.connect(bassGain);
+                    bassGain.connect(audioContext.destination);
+                    bassOsc.type = 'sine';
+                    bassOsc.frequency.setValueAtTime(80, now);
+                    bassOsc.frequency.linearRampToValueAtTime(150, now + 0.07);
+                    bassOsc.frequency.linearRampToValueAtTime(100, now + duration);
+                    bassGain.gain.setValueAtTime(0.25, now);
+                    bassGain.gain.linearRampToValueAtTime(0.3, now + 0.06);
+                    bassGain.gain.linearRampToValueAtTime(0, now + duration);
                     
-                    // Noise layer for engine texture
+                    // Mid frequency (cylinder firing)
+                    const midOsc = audioContext.createOscillator();
+                    const midGain = audioContext.createGain();
+                    midOsc.connect(midGain);
+                    midGain.connect(audioContext.destination);
+                    midOsc.type = 'sine';
+                    midOsc.frequency.setValueAtTime(200, now);
+                    midOsc.frequency.linearRampToValueAtTime(350, now + 0.08);
+                    midOsc.frequency.linearRampToValueAtTime(250, now + duration);
+                    midGain.gain.setValueAtTime(0.2, now);
+                    midGain.gain.linearRampToValueAtTime(0.28, now + 0.06);
+                    midGain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    // High harmonic (valve noise)
+                    const highOsc = audioContext.createOscillator();
+                    const highGain = audioContext.createGain();
+                    highOsc.connect(highGain);
+                    highGain.connect(audioContext.destination);
+                    highOsc.type = 'sine';
+                    highOsc.frequency.setValueAtTime(400, now);
+                    highOsc.frequency.linearRampToValueAtTime(550, now + 0.08);
+                    highOsc.frequency.linearRampToValueAtTime(420, now + duration);
+                    highGain.gain.setValueAtTime(0.12, now);
+                    highGain.gain.linearRampToValueAtTime(0.18, now + 0.05);
+                    highGain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    // Engine knock/firing pulse noise
                     const bufferSize = audioContext.sampleRate * duration;
                     const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
                     const noiseData = noiseBuffer.getChannelData(0);
+                    
+                    // Create pulsating noise pattern (V8 8-cylinder firing)
+                    const fireRate = 8;
                     for (let i = 0; i < bufferSize; i++) {
-                        noiseData[i] = Math.random() * 2 - 1;
+                        const phase = (i / audioContext.sampleRate) * fireRate * Math.PI * 2;
+                        const pulse = Math.sin(phase) > 0.7 ? 1 : 0;
+                        noiseData[i] = (Math.random() * 2 - 1) * pulse * (1 - i / bufferSize);
                     }
+                    
                     const noiseSource = audioContext.createBufferSource();
                     noiseSource.buffer = noiseBuffer;
                     
-                    // Filter noise to engine frequencies
-                    const noiseLowPass = audioContext.createBiquadFilter();
-                    noiseLowPass.type = 'lowpass';
-                    noiseLowPass.frequency.setValueAtTime(800, now);
-                    noiseLowPass.frequency.linearRampToValueAtTime(1200, now + duration);
+                    // Multi-stage filter for engine texture
+                    const noiseBandPass = audioContext.createBiquadFilter();
+                    noiseBandPass.type = 'bandpass';
+                    noiseBandPass.frequency.setValueAtTime(600, now);
+                    noiseBandPass.frequency.linearRampToValueAtTime(900, now + duration);
+                    noiseBandPass.Q.setValueAtTime(1.5, now);
                     
                     const noiseGain = audioContext.createGain();
-                    noiseSource.connect(noiseLowPass);
-                    noiseLowPass.connect(noiseGain);
+                    noiseSource.connect(noiseBandPass);
+                    noiseBandPass.connect(noiseGain);
                     noiseGain.connect(audioContext.destination);
-                    
-                    // Main frequency sweep (base engine)
-                    osc1.frequency.setValueAtTime(120, now);
-                    osc1.frequency.linearRampToValueAtTime(280, now + 0.06);
-                    osc1.frequency.linearRampToValueAtTime(200, now + duration);
-                    
-                    // Harmonic frequency sweep (1.5x main frequency)
-                    osc2.frequency.setValueAtTime(180, now);
-                    osc2.frequency.linearRampToValueAtTime(420, now + 0.06);
-                    osc2.frequency.linearRampToValueAtTime(300, now + duration);
-                    
-                    // Volume envelopes
-                    osc1Gain.gain.setValueAtTime(0.2, now);
-                    osc1Gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
-                    osc1Gain.gain.linearRampToValueAtTime(0, now + duration);
-                    
-                    osc2Gain.gain.setValueAtTime(0.15, now);
-                    osc2Gain.gain.linearRampToValueAtTime(0.2, now + 0.05);
-                    osc2Gain.gain.linearRampToValueAtTime(0, now + duration);
-                    
-                    noiseGain.gain.setValueAtTime(0.08, now);
-                    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+                    noiseGain.gain.setValueAtTime(0.12, now);
+                    noiseGain.gain.linearRampToValueAtTime(0.18, now + 0.04);
                     noiseGain.gain.linearRampToValueAtTime(0, now + duration);
                     
-                    osc1.start(now);
-                    osc1.stop(now + duration);
-                    osc2.start(now);
-                    osc2.stop(now + duration);
+                    // Compression-like effect with attack burst
+                    const burstOsc = audioContext.createOscillator();
+                    const burstGain = audioContext.createGain();
+                    burstOsc.connect(burstGain);
+                    burstGain.connect(audioContext.destination);
+                    burstOsc.type = 'square';
+                    burstOsc.frequency.setValueAtTime(250, now);
+                    burstGain.gain.setValueAtTime(0, now);
+                    burstGain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+                    burstGain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    
+                    bassOsc.start(now);
+                    bassOsc.stop(now + duration);
+                    midOsc.start(now);
+                    midOsc.stop(now + duration);
+                    highOsc.start(now);
+                    highOsc.stop(now + duration);
+                    burstOsc.start(now);
+                    burstOsc.stop(now + duration);
                     noiseSource.start(now);
                     noiseSource.stop(now + duration);
                 } catch (e) {}
@@ -2815,70 +2844,99 @@
                 try {
                     const audioContext = window.audioContext || (window.audioContext = new (window.AudioContext || window.webkitAudioContext)());
                     const now = audioContext.currentTime;
-                    const duration = 0.12;
+                    const duration = 0.15;
                     
-                    // Main engine oscillator
-                    const osc1 = audioContext.createOscillator();
-                    const osc1Gain = audioContext.createGain();
-                    osc1.connect(osc1Gain);
-                    osc1Gain.connect(audioContext.destination);
-                    osc1.type = 'sine';
+                    // V8 Engine characteristics - deep rumble with firing pulses
                     
-                    // Second harmonic for richness
-                    const osc2 = audioContext.createOscillator();
-                    const osc2Gain = audioContext.createGain();
-                    osc2.connect(osc2Gain);
-                    osc2Gain.connect(audioContext.destination);
-                    osc2.type = 'sine';
+                    // Low frequency rumble (engine block)
+                    const bassOsc = audioContext.createOscillator();
+                    const bassGain = audioContext.createGain();
+                    bassOsc.connect(bassGain);
+                    bassGain.connect(audioContext.destination);
+                    bassOsc.type = 'sine';
+                    bassOsc.frequency.setValueAtTime(80, now);
+                    bassOsc.frequency.linearRampToValueAtTime(150, now + 0.07);
+                    bassOsc.frequency.linearRampToValueAtTime(100, now + duration);
+                    bassGain.gain.setValueAtTime(0.25, now);
+                    bassGain.gain.linearRampToValueAtTime(0.3, now + 0.06);
+                    bassGain.gain.linearRampToValueAtTime(0, now + duration);
                     
-                    // Noise layer for engine texture
+                    // Mid frequency (cylinder firing)
+                    const midOsc = audioContext.createOscillator();
+                    const midGain = audioContext.createGain();
+                    midOsc.connect(midGain);
+                    midGain.connect(audioContext.destination);
+                    midOsc.type = 'sine';
+                    midOsc.frequency.setValueAtTime(200, now);
+                    midOsc.frequency.linearRampToValueAtTime(350, now + 0.08);
+                    midOsc.frequency.linearRampToValueAtTime(250, now + duration);
+                    midGain.gain.setValueAtTime(0.2, now);
+                    midGain.gain.linearRampToValueAtTime(0.28, now + 0.06);
+                    midGain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    // High harmonic (valve noise)
+                    const highOsc = audioContext.createOscillator();
+                    const highGain = audioContext.createGain();
+                    highOsc.connect(highGain);
+                    highGain.connect(audioContext.destination);
+                    highOsc.type = 'sine';
+                    highOsc.frequency.setValueAtTime(400, now);
+                    highOsc.frequency.linearRampToValueAtTime(550, now + 0.08);
+                    highOsc.frequency.linearRampToValueAtTime(420, now + duration);
+                    highGain.gain.setValueAtTime(0.12, now);
+                    highGain.gain.linearRampToValueAtTime(0.18, now + 0.05);
+                    highGain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    // Engine knock/firing pulse noise
                     const bufferSize = audioContext.sampleRate * duration;
                     const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
                     const noiseData = noiseBuffer.getChannelData(0);
+                    
+                    // Create pulsating noise pattern (V8 8-cylinder firing)
+                    const fireRate = 8;
                     for (let i = 0; i < bufferSize; i++) {
-                        noiseData[i] = Math.random() * 2 - 1;
+                        const phase = (i / audioContext.sampleRate) * fireRate * Math.PI * 2;
+                        const pulse = Math.sin(phase) > 0.7 ? 1 : 0;
+                        noiseData[i] = (Math.random() * 2 - 1) * pulse * (1 - i / bufferSize);
                     }
+                    
                     const noiseSource = audioContext.createBufferSource();
                     noiseSource.buffer = noiseBuffer;
                     
-                    // Filter noise to engine frequencies
-                    const noiseLowPass = audioContext.createBiquadFilter();
-                    noiseLowPass.type = 'lowpass';
-                    noiseLowPass.frequency.setValueAtTime(800, now);
-                    noiseLowPass.frequency.linearRampToValueAtTime(1200, now + duration);
+                    // Multi-stage filter for engine texture
+                    const noiseBandPass = audioContext.createBiquadFilter();
+                    noiseBandPass.type = 'bandpass';
+                    noiseBandPass.frequency.setValueAtTime(600, now);
+                    noiseBandPass.frequency.linearRampToValueAtTime(900, now + duration);
+                    noiseBandPass.Q.setValueAtTime(1.5, now);
                     
                     const noiseGain = audioContext.createGain();
-                    noiseSource.connect(noiseLowPass);
-                    noiseLowPass.connect(noiseGain);
+                    noiseSource.connect(noiseBandPass);
+                    noiseBandPass.connect(noiseGain);
                     noiseGain.connect(audioContext.destination);
-                    
-                    // Main frequency sweep (base engine)
-                    osc1.frequency.setValueAtTime(120, now);
-                    osc1.frequency.linearRampToValueAtTime(280, now + 0.06);
-                    osc1.frequency.linearRampToValueAtTime(200, now + duration);
-                    
-                    // Harmonic frequency sweep (1.5x main frequency)
-                    osc2.frequency.setValueAtTime(180, now);
-                    osc2.frequency.linearRampToValueAtTime(420, now + 0.06);
-                    osc2.frequency.linearRampToValueAtTime(300, now + duration);
-                    
-                    // Volume envelopes
-                    osc1Gain.gain.setValueAtTime(0.2, now);
-                    osc1Gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
-                    osc1Gain.gain.linearRampToValueAtTime(0, now + duration);
-                    
-                    osc2Gain.gain.setValueAtTime(0.15, now);
-                    osc2Gain.gain.linearRampToValueAtTime(0.2, now + 0.05);
-                    osc2Gain.gain.linearRampToValueAtTime(0, now + duration);
-                    
-                    noiseGain.gain.setValueAtTime(0.08, now);
-                    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+                    noiseGain.gain.setValueAtTime(0.12, now);
+                    noiseGain.gain.linearRampToValueAtTime(0.18, now + 0.04);
                     noiseGain.gain.linearRampToValueAtTime(0, now + duration);
                     
-                    osc1.start(now);
-                    osc1.stop(now + duration);
-                    osc2.start(now);
-                    osc2.stop(now + duration);
+                    // Compression-like effect with attack burst
+                    const burstOsc = audioContext.createOscillator();
+                    const burstGain = audioContext.createGain();
+                    burstOsc.connect(burstGain);
+                    burstGain.connect(audioContext.destination);
+                    burstOsc.type = 'square';
+                    burstOsc.frequency.setValueAtTime(250, now);
+                    burstGain.gain.setValueAtTime(0, now);
+                    burstGain.gain.linearRampToValueAtTime(0.08, now + 0.02);
+                    burstGain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    
+                    bassOsc.start(now);
+                    bassOsc.stop(now + duration);
+                    midOsc.start(now);
+                    midOsc.stop(now + duration);
+                    highOsc.start(now);
+                    highOsc.stop(now + duration);
+                    burstOsc.start(now);
+                    burstOsc.stop(now + duration);
                     noiseSource.start(now);
                     noiseSource.stop(now + duration);
                 } catch (e) {}
