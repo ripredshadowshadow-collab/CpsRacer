@@ -1628,25 +1628,72 @@
                     
                     const audioContext = window.audioContext || (window.audioContext = new (window.AudioContext || window.webkitAudioContext)());
                     const now = audioContext.currentTime;
+                    const duration = 0.12;
                     
-                    // Engine rev sound - quick pitch sweep
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
+                    // Main engine oscillator
+                    const osc1 = audioContext.createOscillator();
+                    const osc1Gain = audioContext.createGain();
+                    osc1.connect(osc1Gain);
+                    osc1Gain.connect(audioContext.destination);
+                    osc1.type = 'sine';
                     
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
+                    // Second harmonic for richness
+                    const osc2 = audioContext.createOscillator();
+                    const osc2Gain = audioContext.createGain();
+                    osc2.connect(osc2Gain);
+                    osc2Gain.connect(audioContext.destination);
+                    osc2.type = 'sine';
                     
-                    // Engine rev frequency sweep
-                    osc.frequency.setValueAtTime(200, now);
-                    osc.frequency.linearRampToValueAtTime(400, now + 0.08);
+                    // Noise layer for engine texture
+                    const bufferSize = audioContext.sampleRate * duration;
+                    const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                    const noiseData = noiseBuffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        noiseData[i] = Math.random() * 2 - 1;
+                    }
+                    const noiseSource = audioContext.createBufferSource();
+                    noiseSource.buffer = noiseBuffer;
                     
-                    // Quick volume envelope
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.linearRampToValueAtTime(0.1, now + 0.05);
-                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    // Filter noise to engine frequencies
+                    const noiseLowPass = audioContext.createBiquadFilter();
+                    noiseLowPass.type = 'lowpass';
+                    noiseLowPass.frequency.setValueAtTime(800, now);
+                    noiseLowPass.frequency.linearRampToValueAtTime(1200, now + duration);
                     
-                    osc.start(now);
-                    osc.stop(now + 0.08);
+                    const noiseGain = audioContext.createGain();
+                    noiseSource.connect(noiseLowPass);
+                    noiseLowPass.connect(noiseGain);
+                    noiseGain.connect(audioContext.destination);
+                    
+                    // Main frequency sweep (base engine)
+                    osc1.frequency.setValueAtTime(120, now);
+                    osc1.frequency.linearRampToValueAtTime(280, now + 0.06);
+                    osc1.frequency.linearRampToValueAtTime(200, now + duration);
+                    
+                    // Harmonic frequency sweep (1.5x main frequency)
+                    osc2.frequency.setValueAtTime(180, now);
+                    osc2.frequency.linearRampToValueAtTime(420, now + 0.06);
+                    osc2.frequency.linearRampToValueAtTime(300, now + duration);
+                    
+                    // Volume envelopes
+                    osc1Gain.gain.setValueAtTime(0.2, now);
+                    osc1Gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
+                    osc1Gain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    osc2Gain.gain.setValueAtTime(0.15, now);
+                    osc2Gain.gain.linearRampToValueAtTime(0.2, now + 0.05);
+                    osc2Gain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    noiseGain.gain.setValueAtTime(0.08, now);
+                    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+                    noiseGain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    osc1.start(now);
+                    osc1.stop(now + duration);
+                    osc2.start(now);
+                    osc2.stop(now + duration);
+                    noiseSource.start(now);
+                    noiseSource.stop(now + duration);
                 } catch (e) {}
             },
 
@@ -2768,25 +2815,72 @@
                 try {
                     const audioContext = window.audioContext || (window.audioContext = new (window.AudioContext || window.webkitAudioContext)());
                     const now = audioContext.currentTime;
+                    const duration = 0.12;
                     
-                    // Engine rev sound - quick pitch sweep
-                    const osc = audioContext.createOscillator();
-                    const gain = audioContext.createGain();
+                    // Main engine oscillator
+                    const osc1 = audioContext.createOscillator();
+                    const osc1Gain = audioContext.createGain();
+                    osc1.connect(osc1Gain);
+                    osc1Gain.connect(audioContext.destination);
+                    osc1.type = 'sine';
                     
-                    osc.connect(gain);
-                    gain.connect(audioContext.destination);
+                    // Second harmonic for richness
+                    const osc2 = audioContext.createOscillator();
+                    const osc2Gain = audioContext.createGain();
+                    osc2.connect(osc2Gain);
+                    osc2Gain.connect(audioContext.destination);
+                    osc2.type = 'sine';
                     
-                    // Engine rev frequency sweep
-                    osc.frequency.setValueAtTime(200, now);
-                    osc.frequency.linearRampToValueAtTime(400, now + 0.08);
+                    // Noise layer for engine texture
+                    const bufferSize = audioContext.sampleRate * duration;
+                    const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                    const noiseData = noiseBuffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        noiseData[i] = Math.random() * 2 - 1;
+                    }
+                    const noiseSource = audioContext.createBufferSource();
+                    noiseSource.buffer = noiseBuffer;
                     
-                    // Quick volume envelope
-                    gain.gain.setValueAtTime(0.3, now);
-                    gain.gain.linearRampToValueAtTime(0.1, now + 0.05);
-                    gain.gain.linearRampToValueAtTime(0, now + 0.08);
+                    // Filter noise to engine frequencies
+                    const noiseLowPass = audioContext.createBiquadFilter();
+                    noiseLowPass.type = 'lowpass';
+                    noiseLowPass.frequency.setValueAtTime(800, now);
+                    noiseLowPass.frequency.linearRampToValueAtTime(1200, now + duration);
                     
-                    osc.start(now);
-                    osc.stop(now + 0.08);
+                    const noiseGain = audioContext.createGain();
+                    noiseSource.connect(noiseLowPass);
+                    noiseLowPass.connect(noiseGain);
+                    noiseGain.connect(audioContext.destination);
+                    
+                    // Main frequency sweep (base engine)
+                    osc1.frequency.setValueAtTime(120, now);
+                    osc1.frequency.linearRampToValueAtTime(280, now + 0.06);
+                    osc1.frequency.linearRampToValueAtTime(200, now + duration);
+                    
+                    // Harmonic frequency sweep (1.5x main frequency)
+                    osc2.frequency.setValueAtTime(180, now);
+                    osc2.frequency.linearRampToValueAtTime(420, now + 0.06);
+                    osc2.frequency.linearRampToValueAtTime(300, now + duration);
+                    
+                    // Volume envelopes
+                    osc1Gain.gain.setValueAtTime(0.2, now);
+                    osc1Gain.gain.linearRampToValueAtTime(0.25, now + 0.05);
+                    osc1Gain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    osc2Gain.gain.setValueAtTime(0.15, now);
+                    osc2Gain.gain.linearRampToValueAtTime(0.2, now + 0.05);
+                    osc2Gain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    noiseGain.gain.setValueAtTime(0.08, now);
+                    noiseGain.gain.linearRampToValueAtTime(0.12, now + 0.04);
+                    noiseGain.gain.linearRampToValueAtTime(0, now + duration);
+                    
+                    osc1.start(now);
+                    osc1.stop(now + duration);
+                    osc2.start(now);
+                    osc2.stop(now + duration);
+                    noiseSource.start(now);
+                    noiseSource.stop(now + duration);
                 } catch (e) {}
             },
             
