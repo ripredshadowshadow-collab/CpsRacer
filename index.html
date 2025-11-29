@@ -413,6 +413,11 @@
         </svg>
     </button>
 
+    <!-- Engine Start Sound -->
+    <audio id="engine-start-sound" preload="auto">
+        <source src="attached_assets/engine start_1764390291965.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Main Menu Content Container -->
     <div class="w-full max-w-sm mx-auto p-4 main-menu-container rounded-xl shadow-2xl">
         
@@ -1554,12 +1559,26 @@
                 this.gameOverMessage.style.display = 'none';
                 this.timerDisplay.textContent = '0s';
                 
+                // Play engine start sound
+                this.playEngineStart();
+                
                 // Initial render
                 this.render();
                 this.updateDisplay();
                 
                 // Spawn first set of traps
                 this.spawnTraps(this.TRAP_SPAWN_RANGE);
+            },
+            
+            playEngineStart() {
+                try {
+                    if (document.getElementById('sound-toggle').classList.contains('muted')) return;
+                    const sound = document.getElementById('engine-start-sound');
+                    if (sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(() => {});
+                    }
+                } catch (e) {}
             },
             
             handleKey(e) {
@@ -2693,6 +2712,9 @@
                 this.hideAllViews();
                 document.getElementById('online-racing-view').classList.remove('hidden');
                 
+                // Play engine start sound
+                this.playEngineStart();
+                
                 // Reset game state
                 this.currentLane = 2;
                 this.score = 0;
@@ -2939,6 +2961,16 @@
                     burstOsc.stop(now + duration);
                     noiseSource.start(now);
                     noiseSource.stop(now + duration);
+                } catch (e) {}
+            },
+            
+            playEngineStart() {
+                try {
+                    const sound = document.getElementById('engine-start-sound');
+                    if (sound) {
+                        sound.currentTime = 0;
+                        sound.play().catch(() => {});
+                    }
                 } catch (e) {}
             },
             
